@@ -1,0 +1,37 @@
+<h2>Your Pacients</h2>
+
+
+
+<section class="pricing py-5">
+    <div class="container">
+
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><a class="page-link" (click)="previousPage()" id="previous">Previous</a></li>
+          <li class="page-item"><a class="page-link" (click)="nextPage()" id="next">Next</a></li>
+        </ul>
+      </nav>
+
+    <div class="d-flex justify-content-center">
+      <div class="row">
+          <div class="card mb-5 mb-lg-0" *ngFor="let p of patientsOnCurrentPage,let i=index" >
+           
+            <div class="card-body" *ngIf="i < 3">
+              <h6 class="card-price text-center"><span class="fas fa-heartbeat">{{p}}</span></h6>
+              <hr>
+              <ul class="fa-ul">
+                <li><span class="fa-li"><i class="fas fa-check"></i></span>Free service</li>
+                <li><span class="fa-li"><i class="fas fa-check"></i></span>Available 24h/day</li>
+                <li><span class="fa-li"><i class="fas fa-check"></i></span>Monthly Status Reports</li>
+                <li><span class="fa-li"><i class="fas fa-check"></i></span>Community Access</li>
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Home Medical Support</li>
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Dedicated Phone Support</li>
+                <li class="text-muted"><span class="fa-li"><i class="fas fa-times"></i></span>Free Techinical Support</li>
+              </ul>
+              <a  class="btn btn-block btn-primary text-uppercase">Read More</a>
+            </div>
+          </div>
+      </div>
+    </div>
+    </div>
+  </section>

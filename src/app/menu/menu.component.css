@@ -1,0 +1,31 @@
+nav{
+    background-color:lightseagreen;
+}
+
+.glyphicon-heart
+{
+    color: black;
+}
+
+.glyphicon-alert
+{
+    color:red;
+}
+
+.badge
+{
+    color:white;
+    background-color: red;
+    position:absolute;
+    left: 19%;
+    top:18%;
+}
+.glyphicon
+{
+    font-size: 25px;
+}
+.navbar-brand
+{
+    color: black;
+    font-style: italic;
+}
