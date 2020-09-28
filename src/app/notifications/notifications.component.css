@@ -1,0 +1,17 @@
+
+.card
+{
+border: none;
+border-radius: 2rem;
+border-color: lightseagreen;
+transition: all 0.2s;
+box-shadow: 0 0.5rem 1rem 0 rgba(29, 145, 160, 30);
+padding: 5px;
+margin: 2rem 0;
+}
+
+.pink-textarea textarea.md-textarea:focus {
+  border-top:none ;
+  border-bottom: 1px solid #f48fb1;
+  box-shadow: 0 1px 0 0 #f48fb1;
+}

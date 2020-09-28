@@ -122,5 +122,8 @@
       }
     }
   },
-  "defaultProject": "patiently"
+  "defaultProject": "patiently",
+  "cli": {
+    "analytics": "e8a1286c-2621-4af7-ad15-bffae16bb244"
+  }
 }

@@ -1,0 +1,32 @@
+.example-container .mat-form-field + .mat-form-field {
+  margin-left: 20px;
+}
+
+.example-right-align {
+  text-align: right;
+}
+
+input.example-right-align::-webkit-outer-spin-button,
+input.example-right-align::-webkit-inner-spin-button {
+  display: none;
+}
+
+input.example-right-align {
+  -moz-appearance: textfield;
+}
+.mat-form-field
+{
+  padding: 15px;
+  height: 32px;
+  size: 32px;
+}
+input
+{
+  width: 90% !important;
+}
+.container
+{
+  position: absolute;
+  top: 30%;
+  left: 30%;
+}

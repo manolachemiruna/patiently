@@ -1,3 +1,4 @@
+import { NotificationsService } from './../services/notifications.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
-  constructor() { }
+  numberOfNotifications: number;
+
+  constructor(private notifications: NotificationsService) { }
 
   ngOnInit(): void {
+    this.numberOfNotifications = this.notifications.getNumberOfNotifications();
   }
 
 }

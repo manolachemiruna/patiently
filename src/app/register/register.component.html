@@ -1,0 +1,53 @@
+<footer class="footer">
+  <div class="container">
+   <button class="fa fa-calendar fa-2x"></button>
+  </div>
+</footer>
+
+<div class="container">
+
+  <div class="col-md-6 mb-4">
+
+    <div class="card gradient-card" *ngFor="let i of numbers">
+        <div class="card-image">
+          <a>
+            <div class="text-black d-flex h-100 mask blue-gradient-rgba">
+              <div class="first-content align-self-center p-3">
+                <h3 class="card-title">Patient's Name</h3>
+                <p class="lead mb-1">Age</p>
+                <p class="lead mb-1">Phone Number</p>
+                <p class="lead mb-1">Appointment Date</p>
+              </div>
+              <div class="second-content align-self-center mx-auto text-center">
+                <i class="far fa-heart fa-3x"></i>
+              </div>
+            </div>
+          </a>
+        </div>
+        <section class="pricing py-5">
+          <div class="container">
+
+          <div class="d-flex justify-content-center">
+            <div class="row">
+                <div class="card mb-5 mb-lg-0" *ngFor="let p of numbers,let i=index">
+
+                  <div class="card-body">
+                    <h6 class="card-price text-center"><span class="fas fa-heartbeat">{{p}}</span></h6>
+                    <hr>
+                    <ul class="fa-ul">
+                      <li *ngIf="isEKG(p)"><span class="fa-li"><i class="fa fa-stethoscope"></i></span>Click the button to see EKG</li>
+                      <li *ngIf="!isEKG(p)"><span class="fa-li"><i class="fa fa-stethoscope"></i></span>The most recent value:value</li>
+                    </ul>
+                    <button class="btn btn-success text-uppercase">See More</button>
+                  </div>
+      </div>
+      </div>
+      </div>
+      </div>
+      </section>
+
+        </div>
+        </div>
+
+
+

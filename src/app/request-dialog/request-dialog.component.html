@@ -1,0 +1,53 @@
+<mat-horizontal-stepper #stepper>
+  <mat-step>
+      <ng-template matStepLabel>Fill in patient's name</ng-template>
+      <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input matInput placeholder="Last name, First name" [(ngModel)]="patientName" name="name" required>
+      </mat-form-field>
+      <div>
+          <button id="button" mat-button matStepperNext [disabled]="!patientName">Next</button>
+      </div>
+  </mat-step>
+
+  <mat-step>
+      <ng-template matStepLabel>Fill in the date</ng-template>
+      <mat-form-field appearance="fill">
+        <mat-label>Choose a date</mat-label>
+        <input matInput [matDatepicker]="picker" [(ngModel)]="date" required>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button id="button" mat-button matStepperNext [disabled]="!date">Next</button>
+      </div>
+  </mat-step>
+
+  <mat-step>
+      <ng-template matStepLabel>Choose hour</ng-template>
+      <div>
+          <mat-form-field appearance="fill">
+          <mat-label>Choose hour</mat-label>
+            <mat-select [(ngModel)]="hour" name="quarter" required>
+            <mat-option *ngFor="let q of hourList" [value]="q">
+                {{ q }}
+            </mat-option>
+        </mat-select>
+        </mat-form-field>
+
+          <button mat-button matStepperPrevious>Back</button>
+          <button id="button" mat-button matStepperNext [disabled]="!hour">Next</button>
+      </div>
+  </mat-step>
+
+  <mat-step>
+      <ng-template matStepLabel>Done</ng-template>
+      <p>You are done now.</p>
+      <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="send()">Apply</button>
+      </div>
+  </mat-step>
+
+</mat-horizontal-stepper>

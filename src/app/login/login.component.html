@@ -1,1 +1,23 @@
-<p>login works!</p>
+<div class="container" style="font-size: 20px">
+  <div class="row">
+    <div class="col-md-12 mb-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Enter your email</mat-label>
+      <input  matInput type="text" name="email" [(ngModel)]="email" required>
+    </mat-form-field>
+    </div>
+    <div class="col-md-12 mb-2">
+    <mat-form-field appearance="outline">
+      <mat-label>Enter your password</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+    </mat-form-field>
+    </div>
+    <div class="col-md-12 mb-2">
+      <button mat-raised-button class="mat-flat-button">Login</button>
+    </div>
+    </div>
+  </div>
+

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+/* tslint:disable */
 
 @Component({
   selector: 'app-patients',
@@ -7,137 +9,103 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PatientsComponent implements OnInit {
 
-  patients:Array<String>=new Array<String>();
-  curentPage=1;
-  currentIndex=0;
-  patientsOnCurrentPage:Array<String>=new Array<String>();
-  
-  constructor() { }
+  patients: Array<string> = new Array <string>();
+  curentPage = 1;
+  currentIndex = 0;
+  patientsOnCurrentPage: Array<string> = new Array<string>();
+  disease:string;
+  closeResult = '';
+
+  constructor(private modalService:NgbModal) { }
 
   ngOnInit(): void {
 
-    this.patients=["ana","ion","ghita","popa","miruna","mara","ruxi","mami","tati","buni","cutu","tataia","aaaa"];
 
-    this.patientsOnCurrentPage.push(this.patients[this.curentPage-1]);
+    this.patients = ["ana", "ion", "ghita", "popa", "miruna", "mara", "ruxi", "mami", "tati", "buni", "cutu", "tataia", "aaaa"];
+
+    this.patientsOnCurrentPage.push(this.patients[this.curentPage - 1]);
     this.patientsOnCurrentPage.push(this.patients[this.curentPage]);
-    this.patientsOnCurrentPage.push(this.patients[this.curentPage+1]);
-    this.currentIndex+=3;
+    this.patientsOnCurrentPage.push(this.patients[this.curentPage + 1]);
+
   }
 
 
   nextPage()
   {
-  
-    
-    let i;
+
+
     let contor;
-    let copyCurrentIndex=this.currentIndex;
 
-    if(Number.isInteger(this.patients.length/3))contor=this.patients.length/3;
-    else contor=Math.trunc(this.patients.length/3)+1;
+    let patient= this.patientsOnCurrentPage[0];
+    let index=this.patients.indexOf(patient);//iau indexul din vectorul mare al primul pacient pe pagina curenta
+    contor=index+this.patientsOnCurrentPage.length;
+    console.log(index);
+    let co=contor+3;
 
-    
 
-    if(this.curentPage<contor)
+    if(index<this.patients.length && index>=0 && this.patientsOnCurrentPage.length==3)
     {
-      
-      for(i=0;i<=this.patientsOnCurrentPage.length+1;i++)
-      {
-        this.patientsOnCurrentPage.pop();
-      }
-
-      for(i=copyCurrentIndex;i<copyCurrentIndex+3;i++)
-      {
-        if(this.patients[i]!=undefined)
-        {
-          this.patientsOnCurrentPage.push(this.patients[i]);
-          this.currentIndex++;
-
-        }
-      }
-      
-    
+      for(let i=0;i<=5;i++)this.patientsOnCurrentPage.pop();
+      console.log(this.patientsOnCurrentPage);
+      for(let i=contor;i<co;i++)if(this.patients[i]!=undefined)this.patientsOnCurrentPage.push(this.patients[i]);
+      console.log(this.patientsOnCurrentPage);
       this.curentPage++;
-
     }
-    else 
+    else
     {
       var element = <HTMLInputElement> document.getElementById("next");
       element.disabled = true;
     }
-   
+
+
 
   }
 
 
   previousPage()
   {
-    
+
     let contor;
 
+    let patient= this.patientsOnCurrentPage[0];
+    let index=this.patients.indexOf(patient);//iau indexul din vectorul mare al primul pacient pe pagina curenta
+    contor=index-this.patientsOnCurrentPage.length;
+    let co=index-3;
 
-    if(Number.isInteger(this.patients.length/3))contor=this.patients.length/3;
-    else contor=Math.trunc(this.patients.length/3)+1;
 
-    let copyCurrentIndex=this.currentIndex;
-
-    let i;
-
-    let n=this.patientsOnCurrentPage.length;
-
-    if(this.curentPage >1 && this.curentPage <=contor)
+    if(index>0)
     {
-      for(i=0;i<=this.patientsOnCurrentPage.length+1;i++)
-      {
-        this.patientsOnCurrentPage.pop();
-      }
-
-      console.log(this.currentIndex);
-
-     if(n<3)
-     { for(i=copyCurrentIndex-n-1;i>=copyCurrentIndex-n-3;i--)
-      {
-        if(this.patients[i]!=undefined)
-        {
-          this.patientsOnCurrentPage.push(this.patients[i]);
-          this.currentIndex--;
-
-        }
-      }
-      this.currentIndex++;
-    }
-
-    else
-    {
-      for(i=copyCurrentIndex-3;i>copyCurrentIndex-6;i--)
-      {
-        if(this.patients[i]!=undefined)
-        {
-          this.patientsOnCurrentPage.push(this.patients[i]);
-          this.currentIndex--;
-
-        }
-      }
-
-    }
-
-    if(this.curentPage==2)this.currentIndex=3;
-
-      console.log(this.currentIndex);
-      console.log(this.curentPage);
-    
-    
+      for(let i=0;i<=5;i++)this.patientsOnCurrentPage.pop();
+      for(let i=co;i<index;i++)this.patientsOnCurrentPage.push(this.patients[i]);
+      console.log(this.patientsOnCurrentPage);
       this.curentPage--;
-
     }
-
-    else 
+    else
     {
       var element = <HTMLInputElement> document.getElementById("previous");
       element.disabled = true;
     }
 
 
+  }
+
+  open(content) {
+    console.log("aaaaa");
+    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
   }
 
 

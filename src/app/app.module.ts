@@ -8,9 +8,21 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { HomeComponent } from './home/home.component';
 import { PatientsComponent } from './patients/patients.component';
-import{FormsModule} from '@angular/forms';
+import {FormsModule} from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NotificationsComponent } from './notifications/notifications.component';
+import { RequestDialogComponent } from './request-dialog/request-dialog.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,7 +32,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     LogoutComponent,
     HomeComponent,
     PatientsComponent,
-  
+    NotificationsComponent,
+    RequestDialogComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -28,8 +42,18 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     AppRoutingModule,
     BrowserAnimationsModule,
     NgbModule,
+    MatButtonModule,
+    MatCardModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatToolbarModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatIconModule
   ],
-  providers: [],
+  providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
