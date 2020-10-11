@@ -8,6 +8,14 @@
         <ul class="pagination">
           <li class="page-item"><a class="page-link" (click)="previousPage()" id="previous">Previous</a></li>
           <li class="page-item"><a class="page-link" (click)="nextPage()" id="next">Next</a></li>
+          <li><p></p></li>
+          <li>
+            <mat-form-field>
+              <mat-label><span  class="fa fa-search"></span>Search...</mat-label>
+              <input matInput type="text" name="search" [(ngModel)]="search" required>
+            </mat-form-field>
+          </li>
+          <li><button class="btn btn-primary" (click)="searchPatient()">Search</button></li>
         </ul>
       </nav>
 

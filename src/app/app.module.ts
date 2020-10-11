@@ -23,6 +23,9 @@ import { MatStepperModule } from '@angular/material/stepper';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
+import { AdminComponent } from './admin/admin.component';
+import {AngularFireModule} from '@angular/fire';
+import {environment} from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
@@ -34,6 +37,7 @@ import {MatIconModule} from '@angular/material/icon';
     PatientsComponent,
     NotificationsComponent,
     RequestDialogComponent,
+    AdminComponent,
 
   ],
   imports: [
@@ -51,8 +55,10 @@ import {MatIconModule} from '@angular/material/icon';
     MatToolbarModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatIconModule
-  ],
+    MatIconModule,
+    AngularFireModule.initializeApp(environment.firebase),
+
+   ],
   providers: [MatDatepickerModule],
   bootstrap: [AppComponent]
 })

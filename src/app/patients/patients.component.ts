@@ -15,6 +15,7 @@ export class PatientsComponent implements OnInit {
   patientsOnCurrentPage: Array<string> = new Array<string>();
   disease:string;
   closeResult = '';
+  search: string;
 
   constructor(private modalService:NgbModal) { }
 
@@ -106,6 +107,11 @@ export class PatientsComponent implements OnInit {
     } else {
       return `with: ${reason}`;
     }
+  }
+
+  searchPatient()
+  {
+
   }
 
 

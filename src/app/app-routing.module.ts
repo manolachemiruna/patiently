@@ -1,3 +1,4 @@
+import { AdminComponent } from './admin/admin.component';
 import { NotificationsComponent } from './notifications/notifications.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: "login", component: LoginComponent},
   {path: "logout", component: LogoutComponent},
   {path: "notifications", component: NotificationsComponent},
+  {path: "admin", component: AdminComponent},
   {path: "**", component: HomeComponent},
 
 ];
