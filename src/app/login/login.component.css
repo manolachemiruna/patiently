@@ -3,6 +3,11 @@
   opacity: 0.3;
 }
 
+.container{
+
+  margin-top: 100px;
+}
+
 .example-right-align {
   text-align: right;
 }
@@ -52,7 +57,7 @@ input
 {
   position: absolute;
   left: 22%;
-  top:38%;
+  top:45%;
   justify-content: left !important;
   align-items: left !important;
 }
@@ -67,5 +72,11 @@ input
 mat-form-field {
   margin-left: 2.5rem !important;
   width: calc(100% - 2.5rem) !important;
+}
+.alert
+{
+  text-align: center;
+  margin-left: 200px;
+  margin-right:200px;
 }
 

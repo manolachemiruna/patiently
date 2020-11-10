@@ -1,0 +1,68 @@
+<table style="width:100%">
+  <tr>
+    <th>
+    Add Doctors
+    </th>
+    <th>
+   Find doctor
+    </th>
+  </tr>
+  <tr>
+    <td><div  class="container" style="font-size: 20px">
+      <div class="row">
+       <div class="col-md-12 mb-2">
+        <mat-form-field>
+          <mat-label> First Name</mat-label>
+          <input matInput type="text" name="firstname" [(ngModel)]="firstname" required>
+        </mat-form-field>
+       </div>
+       <div class="col-md-12 mb-2">
+        <mat-form-field>
+          <mat-label>Last Name</mat-label>
+          <input matInput type="text" name="lastname" [(ngModel)]="lastname" required>
+        </mat-form-field>
+       </div>
+        <div class="col-md-12 mb-2">
+        <mat-form-field>
+          <mat-label>Enter email</mat-label>
+          <input matInput type="email" name="email" [(ngModel)]="email" required>
+        </mat-form-field>
+        </div>
+        <div class="col-md-12 mb-2">
+        <mat-form-field>
+          <mat-label>Enter password</mat-label>
+          <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" required>
+          <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        </div>
+
+          <button class="mat-raised-button" color="link" target="_blank" [disabled]="!email || !password || !firstname || !lastname" (click)="createDoctor(email,password)">Create Doctor</button>
+        </div>
+      </div>
+    </td>
+    <td>
+
+        <div class="col-md-12 mb-2">
+        <mat-form-field id="search">
+          <mat-label><mat-icon>search</mat-icon>Search..</mat-label>
+          <input matInput type="text" name="search" [(ngModel)]="search" required (change)="getDoctorByEmail(search)">
+        </mat-form-field>
+        <div *ngIf="searchedDoctor" class="col-md-12 mb-2">
+        <table>
+          <td><p>{{"Doctor found: "+searchedDoctor.firstname+" "+searchedDoctor.lastname}}</p></td>
+          <td><button class=" btn btn-danger">Delete doctor</button></td>
+        </table>
+        <p>{{"id: "+searchedDoctor.id}}</p>
+        </div>
+        </div>
+
+    </td>
+  </tr>
+</table>
+
+
+
+
+

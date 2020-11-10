@@ -1,0 +1,46 @@
+
+.container
+{
+  text-align: left;
+  display:inline;
+  justify-content: center;
+  align-items: center;
+  height: 250px;
+  width: 60%;
+  padding: 20px;
+  margin-top: 100px;
+}
+
+.mat-raised-button
+{
+  display:inline;
+  left: 46%;
+  justify-content: right;
+  align-items: right;
+}
+
+mat-form-field {
+  margin-left: 1rem;
+  width: calc(60% - 2rem);
+}
+#search
+{
+  display:inline-block;
+  margin-right: 2rem !important;
+  width: calc(90%-2rem) !important;
+}
+
+td{
+  width: 50%;
+  margin-right: 50px;
+}
+
+th{
+  margin-top: 70px;
+}
+
+p{
+  font-style: bold;
+  margin-right: 50px;
+  margin-left: 10px;
+}

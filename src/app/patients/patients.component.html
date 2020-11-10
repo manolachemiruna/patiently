@@ -1,3 +1,4 @@
+<app-menu></app-menu>
 <h2>Your Pacients</h2>
 
 
@@ -24,12 +25,12 @@
           <div class="card mb-5 mb-lg-0" *ngFor="let p of patientsOnCurrentPage,let i=index" >
 
             <div class="card-body" *ngIf="i < 3">
-              <h6 class="card-price text-center"><span class="fas fa-heartbeat">{{p}}</span></h6>
+              <h6 class="card-price text-center"><span class="fas fa-heartbeat">{{p.firstname+" "+p.lastname}}</span></h6>
               <hr>
               <ul class="fa-ul">
                 <li><span class="fa-li"><i class="fa fa-plus-square"></i></span>Diseases aaaaaaaaa</li>
                 <li><span class="fa-li"><i class="fas fa-phone"></i></span>Phone Number asrtgyhj</li>
-                <li><span class="fa-li"><i class="fas fa-envelope"></i></span>Email Adress asdfgh</li>
+                <li><span class="fa-li"><i class="fas fa-envelope"></i></span>{{"Email Address: "+p.email}}</li>
                 <li><span class="fa-li"><i class="fas fa-map-marker"></i></span>Address asdfghuytre</li>
               </ul>
               <ng-template #content let-modal>
@@ -39,7 +40,7 @@
                 <p>ana are mere</p>
                 </div>
               </ng-template>
-              <button class="btn btn-success text-uppercase" (click)="open(content)">Edit Patient's Diagnostics</button>
+              <button class="btn btn-success text-uppercase">Edit Patient's Diagnostics</button>
 
 
 </div>

@@ -1,5 +1,11 @@
+import { DoctorEmail } from './../entitites/DoctorEmail';
+import { AuthService } from './../services/auth.service';
+import { UserEmail } from './../entitites/UserEmail';
+import { UserService } from './../services/user.service';
+import { User } from './../entitites/User';
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {map} from 'rxjs/operators';
 /* tslint:disable */
 
 @Component({
@@ -9,24 +15,44 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 export class PatientsComponent implements OnInit {
 
-  patients: Array<string> = new Array <string>();
+  patients: any;
   curentPage = 1;
   currentIndex = 0;
-  patientsOnCurrentPage: Array<string> = new Array<string>();
+  patientsOnCurrentPage=new Array();
   disease:string;
   closeResult = '';
   search: string;
+  doctor: DoctorEmail;
 
-  constructor(private modalService:NgbModal) { }
+  constructor(private modalService:NgbModal,private userService: UserService,private auth:AuthService) { }
 
   ngOnInit(): void {
 
+     const email=sessionStorage.getItem('user');
+     this.userService.getDoctors().pipe(
+      map(v =>
+       v.filter(user => user.email === email)
+      )
+    ).subscribe(doctor =>
+      {
+        this.doctor = doctor[0];
+      });
 
-    this.patients = ["ana", "ion", "ghita", "popa", "miruna", "mara", "ruxi", "mami", "tati", "buni", "cutu", "tataia", "aaaa"];
+     this.userService.getPatients().pipe(
+      map(v =>
+       v.filter(user => user.doctorId === this.doctor.id)
+      )
+    ).subscribe(patient =>
+      {
+        this.patients=patient;
+        console.log(this.patients[0]);
+        this.patientsOnCurrentPage.push(this.patients[this.curentPage - 1]);
+        this.patientsOnCurrentPage.push(this.patients[this.curentPage]);
+        this.patientsOnCurrentPage.push(this.patients[this.curentPage + 1]);
+        console.log(this.patientsOnCurrentPage);
+      });
 
-    this.patientsOnCurrentPage.push(this.patients[this.curentPage - 1]);
-    this.patientsOnCurrentPage.push(this.patients[this.curentPage]);
-    this.patientsOnCurrentPage.push(this.patients[this.curentPage + 1]);
+
 
   }
 
@@ -88,25 +114,6 @@ export class PatientsComponent implements OnInit {
     }
 
 
-  }
-
-  open(content) {
-    console.log("aaaaa");
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-  }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
   }
 
   searchPatient()

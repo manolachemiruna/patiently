@@ -26,6 +26,15 @@ import {MatIconModule} from '@angular/material/icon';
 import { AdminComponent } from './admin/admin.component';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
+import {AngularFirestoreModule} from '@angular/fire/firestore';
+import {AngularFireAuthModule} from '@angular/fire/auth';
+import {TabViewModule} from 'primeng/tabview';
+import { DoctorsComponent } from './doctors/doctors.component';
+import { PatientComponent } from './patient/patient.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +47,9 @@ import {environment} from '../environments/environment';
     NotificationsComponent,
     RequestDialogComponent,
     AdminComponent,
+    DoctorsComponent,
+    PatientComponent,
+
 
   ],
   imports: [
@@ -57,6 +69,11 @@ import {environment} from '../environments/environment';
     MatNativeDateModule,
     MatIconModule,
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule,
+    TabViewModule,
+    MatTabsModule,
+    MatTableModule
 
    ],
   providers: [MatDatepickerModule],

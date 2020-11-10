@@ -1,21 +1,38 @@
+import { Appointment } from './../entitites/Appointment';
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Appointment } from '../entitites/Appointment';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AppointmentService {
 
-  appointments: Array<Appointment> = new Array<Appointment>();
-  constructor() { }
+  appointments: Observable<Appointment[]>;
+  appointmentsCollection: AngularFirestoreCollection<Appointment>;
+  appointmentsDoc: AngularFirestoreDocument<Appointment>;
+
+
+  constructor(private db: AngularFirestore) { }
 
   getAppointments()
   {
-    return this.appointments;
+
   }
 
   addAppointment(appointment: Appointment)
   {
-    this.appointments.push(appointment);
+     this.insertUserData(appointment);
+  }
+
+
+  insertUserData(appointment: Appointment) {
+    return this.db.collection(`appointments`).add({
+      date: appointment.date,
+      hour: appointment.hour,
+      patientId: appointment.patientId,
+      doctorId: appointment.doctorId
+    });
   }
 }

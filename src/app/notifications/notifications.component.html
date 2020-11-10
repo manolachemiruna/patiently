@@ -1,16 +1,16 @@
+<app-menu></app-menu>
 <div style="display: flex">
 <div class="container">
 
-  <div class="col-md-6 mb-4"*ngFor="let notification of notifications let i = index">
+  <div class="col-md-6 mb-4"*ngFor="let p of patients let i = index">
 
-    <div class="card gradient-card">
+    <div class="card gradient-card" id={{p.id}}>
 
         <div class="card-image">
           <a>
             <div class="text-black d-flex h-100 mask blue-gradient-rgba">
               <div class="first-content align-self-center p-3">
-                <h3 class="card-title">Patient's Name</h3>
-                <p class="lead mb-0">Pulse value</p>
+                <h3 class="card-title">{{p.firstname+" "+p.lastname}}</h3>
               </div>
               <div class="second-content align-self-center mx-auto text-center">
                 <i class="far fa-heart fa-3x"></i>
@@ -25,7 +25,7 @@
           <textarea class="md-textarea form-control" *ngIf="sendMessage"[(ngModel)]="message"></textarea>
           <button class="btn btn-success" *ngIf="sendMessage" (click)="send()">Send</button>
           <button type="button" class="btn btn-dark" *ngIf="!sendMessage" (click)="onClickSendMessage()">Send message</button>
-          <button type="button" class="btn btn-primary" (click)="openNewRequestDialog(appointment)">Set appointment</button>
+          <button type="button" class="btn btn-primary" (click)="openNewRequestDialog(appointment,p)">Set appointment</button>
         </div>
 
         <!-- Content -->
@@ -34,7 +34,7 @@
             <div class="progress-bar bg-info" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <p class="text-muted">Better than last week (25%)</p>
-          <h4 class="text-uppercase font-weight-bold my-4">Details About This Patient</h4>
+          <h4 class="text-uppercase font-weight-bold my-4">Patient's ECG</h4>
           <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam vel dolores qui, necessitatibus aut eaque magni mollitia tenetur molestiae sit quae quos quaerat amet exercitationem atque animi odio.</p>
         </div>
 

@@ -1,16 +1,5 @@
 <mat-horizontal-stepper #stepper>
   <mat-step>
-      <ng-template matStepLabel>Fill in patient's name</ng-template>
-      <mat-form-field>
-          <mat-label>Name</mat-label>
-          <input matInput placeholder="Last name, First name" [(ngModel)]="patientName" name="name" required>
-      </mat-form-field>
-      <div>
-          <button id="button" mat-button matStepperNext [disabled]="!patientName">Next</button>
-      </div>
-  </mat-step>
-
-  <mat-step>
       <ng-template matStepLabel>Fill in the date</ng-template>
       <mat-form-field appearance="fill">
         <mat-label>Choose a date</mat-label>
