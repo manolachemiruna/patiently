@@ -3,7 +3,7 @@ import { Doctor } from './../entitites/Doctor';
 import { UserService } from './../services/user.service';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import {map} from 'rxjs/operators';
+import {delay, map} from 'rxjs/operators';
 @Component({
   selector: 'app-doctors',
   templateUrl: './doctors.component.html',
@@ -20,9 +20,13 @@ export class DoctorsComponent implements OnInit {
   firstname: string;
   lastname: string;
   searchedDoctor: DoctorEmail;
+  message: string;
   constructor(private auth: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
+
+    sessionStorage.removeItem('message');
+    this.message = null;
   }
 
   createDoctor(email, password) {
@@ -32,6 +36,8 @@ export class DoctorsComponent implements OnInit {
      doctor.lastname = this.lastname;
      doctor.firstname = this.firstname;
      this.auth.createDoctor(doctor);
+     setTimeout(() => { this.message = sessionStorage.getItem('message'); }, 2000);
+     console.log(this.message);
   }
 
   getDoctors() {
@@ -45,8 +51,7 @@ export class DoctorsComponent implements OnInit {
       map(v =>
        v.filter(user => user.email === email)
       )
-    ).subscribe(doctor =>
-      {
+    ).subscribe(doctor => {
         this.searchedDoctor = doctor[0];
         console.log(this.searchedDoctor);
       });

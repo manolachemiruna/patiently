@@ -44,3 +44,10 @@ p{
   margin-right: 50px;
   margin-left: 10px;
 }
+
+.alert
+{
+  text-align: center;
+  margin-left: 200px;
+  margin-right: 200px;
+}

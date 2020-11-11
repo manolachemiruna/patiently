@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Router} from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../entitites/User';
+import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class AuthService {
   user: User;
   newDoctor: Doctor;
   doctor: Doctor;
+  message: string;
 
   constructor(
     private afAuth: AngularFireAuth,
@@ -53,13 +55,15 @@ export class AuthService {
     this.afAuth.createUserWithEmailAndPassword( user.email, user.password)
       .then( userCredential => {
         this.newUser = user;
-
         this.insertUserData2(userCredential);
+        sessionStorage.setItem('message', 'Patient successfully  created!');
+
       })
       .catch( error => {
         console.log("eroare la creare pacient");
         console.log(error);
         this.eventAuthError.next(error);
+        sessionStorage.setItem('message', error.message);
       });
   }
 
@@ -76,18 +80,18 @@ export class AuthService {
 
   createDoctor(doctor) {
 
-
     this.afAuth.createUserWithEmailAndPassword(doctor.email, doctor.password)
       .then( userCredential => {
         this.newDoctor = doctor;
         console.log(userCredential);
-
         this.insertUserData(userCredential);
+        sessionStorage.setItem('message', 'Doctor successfully  created!');
       })
       .catch( error => {
         console.log("eroare la creare user");
         console.log(error);
         this.eventAuthError.next(error);
+        sessionStorage.setItem('message', error.message);
       });
   }
 
@@ -108,12 +112,15 @@ export class AuthService {
   }
 
   isLoggedIn() {
-    if (sessionStorage.getItem('user') != null) {return true; } else { return false; }
+    if (sessionStorage.getItem('user') != null) {return true; } else {
+      this.router.navigate(['home']);
+      return false; }
   }
 
   isAdmin() {
     if (sessionStorage.getItem('user') === 'adminsupport@yahoo.com') {return true; } else { return false; }
   }
+
 
 
 

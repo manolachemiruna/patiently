@@ -20,9 +20,13 @@ export class PatientComponent implements OnInit {
   searchedPatient: UserEmail;
   patients;
   doctorId: string;
+  message: string;
   constructor(private auth: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
+
+    sessionStorage.removeItem('message');
+    this.message = null;
   }
 
   createPatient(email, password)
@@ -34,6 +38,8 @@ export class PatientComponent implements OnInit {
      user.lastname = this.lastname;
      user.doctorId = this.doctorId;
      this.auth.createPatient(user);
+     setTimeout(() => { this.message = sessionStorage.getItem('message'); }, 2000);
+     console.log(this.message);
   }
 
   getPatients()

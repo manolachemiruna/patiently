@@ -121,5 +121,10 @@ export class PatientsComponent implements OnInit {
 
   }
 
+  isDoctor()
+  {
+    return !this.auth.isAdmin();
+  }
+
 
 }
