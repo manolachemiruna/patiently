@@ -1,8 +1,16 @@
 <app-menu></app-menu>
+
 <div style="display: flex">
 <div class="container">
 
-  <div class="col-md-6 mb-4"*ngFor="let p of patients let i = index">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" (click)="previousPage()" id="previous">Previous</a></li>
+      <li class="page-item"><a class="page-link" (click)="nextPage()" id="next">Next</a></li>
+    </ul>
+  </nav>
+
+  <div class="col-md-6 mb-4" *ngFor="let p of patientsOnCurrentPage,let i=index">
 
     <div class="card gradient-card" id={{p.id}}>
 

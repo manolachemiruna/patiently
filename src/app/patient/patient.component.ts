@@ -17,7 +17,7 @@ export class PatientComponent implements OnInit {
   lastname: string;
   hide = true;
   search: string;
-  searchedPatient: UserEmail;
+  searchedPatient: UserEmail[];
   patients;
   doctorId: string;
   message: string;
@@ -29,8 +29,7 @@ export class PatientComponent implements OnInit {
     this.message = null;
   }
 
-  createPatient(email, password)
-  {
+  createPatient(email, password) {
      const user = new User();
      user.email = email;
      user.password = password;
@@ -42,32 +41,60 @@ export class PatientComponent implements OnInit {
      console.log(this.message);
   }
 
-  getPatients()
-  {
+  getPatients() {
     this.userService.getPatients().subscribe(
-        patients =>
-      {
+        patients => {
          this.patients = patients;
          console.log(patients);
       });
   }
 
-  getPatientByEmail(email)
-  {
-
+  getPatientByEmail(email) {
     this.userService.getPatients().pipe(
       map(v =>
        v.filter(user => user.email === email)
       )
-    ).subscribe(patient =>
-      {
-        this.searchedPatient = patient[0];
-        console.log(patient[0]);
+    ).subscribe(patient => {
+        this.searchedPatient = patient;
+        console.log(this.searchedPatient);
+        if (this.searchedPatient.length === 0) {
+          this.message = 'There is no patient with this email!';
+        } else { this.message = null; }
       });
   }
 
-  deletePatient(patient)
-  {
+getPatientByName(fullName) {
+
+
+  let fullname = fullName.replace(/\s/g, '');
+  fullname = fullname.toUpperCase();
+  const regex = new RegExp("^" + fullname + ".*");
+  console.log(fullname);
+
+  if (fullname !== '' && fullname != null) {
+  this.userService.getPatients().pipe(
+    map(v =>
+      v.filter(user => (user.lastname + user.firstname).toUpperCase === fullname || (user.firstname + user.lastname).toUpperCase() === fullname || user.lastname.toUpperCase() === fullname || user.firstname.toUpperCase() === fullname || regex.test(user.lastname.toUpperCase()) || regex.test(user.firstname.toUpperCase()) || regex.test((user.lastname + user.firstname).toUpperCase()) || regex.test((user.firstname + user.lastname).toUpperCase()))
+     )
+  ).subscribe(patient => {
+      this.searchedPatient = patient;
+      console.log(this.searchedPatient);
+      if (this.searchedPatient.length === 0) {
+        this.message = 'There is no patient with this name!';
+      } else { this.message = null; }
+    });
+  }
+}
+
+getPatientByInput(input) {
+  const regex1 = new RegExp('^.*@yahoo.com$');
+  const regex2 = new RegExp('^.*@gmail.com$');
+  const fullname = input.replace(/\s/g, '');
+  const email = input.replace(/\s/g, '');
+  if (regex1.test(email) || regex1.test(email)) {this.getPatientByEmail(email); } else { this.getPatientByName(fullname); }
+}
+
+  deletePatient(patient) {
     this.userService.deletePatient(patient);
   }
 }

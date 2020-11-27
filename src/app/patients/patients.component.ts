@@ -45,10 +45,13 @@ export class PatientsComponent implements OnInit {
     ).subscribe(patient =>
       {
         this.patients=patient;
-        console.log(this.patients[0]);
+        console.log(this.patients.length);
         this.patientsOnCurrentPage.push(this.patients[this.curentPage - 1]);
-        this.patientsOnCurrentPage.push(this.patients[this.curentPage]);
-        this.patientsOnCurrentPage.push(this.patients[this.curentPage + 1]);
+        for( let i= 0; i<this.patients.length-1 && i<3 ;i++)
+        {
+          this.patientsOnCurrentPage.push(this.patients[this.curentPage + i]);
+        }
+
         console.log(this.patientsOnCurrentPage);
       });
 

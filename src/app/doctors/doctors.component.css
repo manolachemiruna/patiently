@@ -32,7 +32,7 @@ mat-form-field {
 
 td{
   width: 50%;
-  margin-right: 50px;
+  margin-right: 100px;
 }
 
 th{
@@ -50,4 +50,8 @@ p{
   text-align: center;
   margin-left: 200px;
   margin-right: 200px;
+}
+
+table{
+  margin-right: 100px;
 }

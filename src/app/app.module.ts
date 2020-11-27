@@ -33,6 +33,7 @@ import { DoctorsComponent } from './doctors/doctors.component';
 import { PatientComponent } from './patient/patient.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -73,10 +74,11 @@ import {MatTableModule} from '@angular/material/table';
     AngularFireAuthModule,
     TabViewModule,
     MatTabsModule,
-    MatTableModule
+    MatTableModule,
+    HttpClientModule,
 
    ],
-  providers: [MatDatepickerModule],
+  providers: [MatDatepickerModule, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

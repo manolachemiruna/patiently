@@ -53,15 +53,19 @@
         <div class="col-md-12 mb-2">
         <mat-form-field id="search">
           <mat-label><mat-icon>search</mat-icon>Search..</mat-label>
-          <input matInput type="text" name="search" [(ngModel)]="search" required (change)="getPatientByEmail(search)">
+          <input matInput type="text" name="search" [(ngModel)]="search" required (change)="getPatientByInput(search)">
         </mat-form-field>
         </div>
 
 
 
-        <div *ngIf="searchedPatient" class="col-md-12 mb-2">
-          <td><p>{{"Patient found: "+searchedPatient.firstname+" "+searchedPatient.lastname}}</p><p> </p></td>
+        <div *ngFor=" let pat of searchedPatient" class="col-md-12 mb-2">
+          <table>
+            <tr>
+          <td><p>{{"Patient found: "+pat.firstname+" "+pat.lastname}}</p><p> </p></td>
           <td><button class=" btn btn-danger" (click)="deletePatient(searchedPatient)">Delete Patient</button></td>
+           </tr>
+        </table>
         </div>
 
     </td>

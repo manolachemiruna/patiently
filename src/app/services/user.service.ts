@@ -4,6 +4,7 @@ import {AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument} 
 import { Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { UserEmail } from '../entitites/UserEmail';
+import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +17,7 @@ export class UserService {
   userDoc: AngularFirestoreDocument<UserEmail>;
   doctorDoc: AngularFirestoreDocument<DoctorEmail>;
 
-  constructor(private db: AngularFirestore) {
+  constructor(private db: AngularFirestore, private http: HttpClient) {
 
     this.doctorsCollection = this.db.collection<DoctorEmail>('doctors');
     this.doctors = this.doctorsCollection.snapshotChanges().pipe(
@@ -59,6 +60,11 @@ export class UserService {
   deletePatient(patient) {
     this.userDoc = this.db.doc(`patients/${patient.id}`);
     this.userDoc.delete();
+  }
+
+  getDoctorFromRegistry(firstname, lastname)
+  {
+    return this.http.get("https://regmed.cmr.ro/api/v1/public/cautare/" + firstname + lastname);
   }
 
 
