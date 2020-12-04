@@ -42,7 +42,7 @@ export class AuthService {
       .then(userCredential => {
         if (userCredential) {
           sessionStorage.setItem('user', email);
-          if (this.isAdmin()) { this.router.navigate(['/admin']); } else { this.router.navigate(['/notifications']); }
+          if (this.isAdmin()) { this.router.navigate(['/admin']); } else { this.router.navigate(['/appointments']); }
         }
       });
 
@@ -107,6 +107,7 @@ export class AuthService {
 
   logout() {
     sessionStorage.removeItem('user');
+    sessionStorage.removeItem('numberOfAppointments');
     this.afAuth.signOut();
     this.router.navigate(['/home']);
   }

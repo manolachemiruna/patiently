@@ -1,8 +1,9 @@
+import { DoctorEmail } from './../entitites/DoctorEmail';
 import { Appointment } from './../entitites/Appointment';
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore';
-
+import {map, filter} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -12,17 +13,28 @@ export class AppointmentService {
   appointments: Observable<Appointment[]>;
   appointmentsCollection: AngularFirestoreCollection<Appointment>;
   appointmentsDoc: AngularFirestoreDocument<Appointment>;
+  todayDate: any;
+  doctor: DoctorEmail;
 
 
-  constructor(private db: AngularFirestore) { }
+  constructor(private db: AngularFirestore) {
+    this.appointmentsCollection = this.db.collection<Appointment>('appointments', ref => ref.orderBy('date').orderBy('hour'));
+    this.appointments = this.appointmentsCollection.snapshotChanges().pipe(
+      map(changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Appointment;
+        const id = a.payload.doc.id;
+        return {id, ...data};
+      });
+    })
+    );
+   }
 
-  getAppointments()
-  {
-
+  getAppointments() {
+     return this.appointments;
   }
 
-  addAppointment(appointment: Appointment)
-  {
+  addAppointment(appointment: Appointment) {
      this.insertUserData(appointment);
   }
 
@@ -35,4 +47,10 @@ export class AppointmentService {
       doctorId: appointment.doctorId
     });
   }
+
+  deleteAppointment(id) {
+    this.appointmentsDoc = this.db.doc(`appointments/${id}`);
+    this.appointmentsDoc.delete();
+  }
+
 }

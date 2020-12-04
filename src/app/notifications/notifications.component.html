@@ -31,7 +31,7 @@
         <!-- Data -->
         <div class="third-content ml-auto mr-4 mb-2">
           <textarea class="md-textarea form-control" *ngIf="sendMessage"[(ngModel)]="message"></textarea>
-          <button class="btn btn-success" *ngIf="sendMessage" (click)="send()">Send</button>
+          <button class="btn btn-success" *ngIf="sendMessage" (click)="send(p.id,message)">Send</button>
           <button type="button" class="btn btn-dark" *ngIf="!sendMessage" (click)="onClickSendMessage()">Send message</button>
           <button type="button" class="btn btn-primary" (click)="openNewRequestDialog(appointment,p)">Set appointment</button>
         </div>

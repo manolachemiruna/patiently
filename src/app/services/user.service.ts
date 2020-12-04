@@ -30,7 +30,7 @@ export class UserService {
     })
     );
 
-    this.patientsCollection = this.db.collection<UserEmail>('patients');
+    this.patientsCollection = this.db.collection<UserEmail>('patients', ref => ref.orderBy('lastname'));
     this.patients = this.patientsCollection.snapshotChanges()
     .pipe(
       map(changes => {
@@ -62,9 +62,14 @@ export class UserService {
     this.userDoc.delete();
   }
 
-  getDoctorFromRegistry(firstname, lastname)
-  {
+  getDoctorFromRegistry(firstname, lastname) {
     return this.http.get("https://regmed.cmr.ro/api/v1/public/cautare/" + firstname + lastname);
+  }
+
+  getPatientById(id) {
+    return this.getPatients().pipe(
+      map(p => p.filter(patient => patient.id === id))
+    );
   }
 
 

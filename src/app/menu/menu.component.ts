@@ -1,6 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
-import { NotificationsService } from './../services/notifications.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -11,16 +10,23 @@ import { Observable } from 'rxjs';
 })
 export class MenuComponent implements OnInit {
 
-  numberOfNotifications: number;
+  numberOfAppointments: string;
   admin: boolean;
+  loggedIn: boolean;
 
-  constructor(private notifications: NotificationsService, private auth: AuthService) { }
+  constructor(private auth: AuthService) { }
 
   ngOnInit(): void {
 
-    console.log("admin");
     this.admin = this.auth.isAdmin();
-    this.numberOfNotifications = this.notifications.getNumberOfNotifications();
+    this.numberOfAppointments = sessionStorage.getItem('numberOfAppointments');
+    if (this.auth.isLoggedIn) { this.loggedIn = true; }
+    else { this.loggedIn = false; }
+  }
+
+  getNumberOfAppointments($event)
+  {
+    this.numberOfAppointments = sessionStorage.getItem('numberOfAppointments');
   }
 
 }

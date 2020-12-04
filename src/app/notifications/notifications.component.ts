@@ -1,3 +1,4 @@
+import { MessagesService } from './../services/messages.service';
 import { UserEmail } from './../entitites/UserEmail';
 import { Appointment } from './../entitites/Appointment';
 import { DoctorEmail } from './../entitites/DoctorEmail';
@@ -26,7 +27,7 @@ export class NotificationsComponent implements OnInit {
 
 
 
-  constructor(private dialog: MatDialog, private userService: UserService) { }
+  constructor(private dialog: MatDialog, private userService: UserService, private messageService: MessagesService) { }
 
   ngOnInit(): void {
 
@@ -69,7 +70,8 @@ export class NotificationsComponent implements OnInit {
     this.sendMessage = true;
   }
 
-  send() {
+  send(id, message) {
+    this.messageService.addMessage(id, message);
     this.sendMessage = false;
   }
 
