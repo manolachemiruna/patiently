@@ -1,3 +1,5 @@
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { AdminComponent } from './admin/admin.component';
 import { NotificationsComponent } from './notifications/notifications.component';
@@ -20,6 +22,8 @@ const routes: Routes = [
   {path: "logout", component: LogoutComponent},
   {path: "notifications", component: NotificationsComponent, canActivate: [AuthGuardService]},
   {path: "admin", component: AdminComponent, canActivate: [AdminGuardService]},
+  {path: "forgotPassword", component: ForgotPasswordComponent},
+  {path: "resetPassword", component: ResetPasswordComponent},
   {path: "**", component: HomeComponent},
 
 ];

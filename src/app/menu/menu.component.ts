@@ -20,7 +20,7 @@ export class MenuComponent implements OnInit {
 
     this.admin = this.auth.isAdmin();
     this.numberOfAppointments = sessionStorage.getItem('numberOfAppointments');
-    if (this.auth.isLoggedIn) { this.loggedIn = true; }
+    if (this.auth.isLoggedIn()) { this.loggedIn = true; }
     else { this.loggedIn = false; }
   }
 

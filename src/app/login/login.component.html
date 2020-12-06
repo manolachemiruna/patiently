@@ -1,7 +1,7 @@
 <app-menu></app-menu>
 <div class="alert alert-danger" role="alert" *ngIf="roleErrorMessage">{{roleErrorMessage}}</div>
 <div class="alert alert-danger" role="alert" *ngIf="userPasswordError">{{userPasswordError}}</div>
-<div *ngIf="!forgotPassword" class="container" style="font-size: 20px">
+<div class="container" style="font-size: 20px">
   <div class="row">
     <div class="col-md-12 mb-2">
     <mat-form-field>
@@ -23,22 +23,5 @@
       <button mat-button color="accent" (click)="onClick()">Forgot your password?</button>
   </div>
 </div>
-
-  <div *ngIf="forgotPassword" class="container" style="font-size: 20px">
-    <div class="row">
-      <div class="col-md-12 mb-2">
-      <div class="alert alert-danger" role="alert" *ngIf="!emailToResetPassword && emailField.touched">{{message}}</div>
-      <div class="alert alert-success" role="alert" *ngIf="sent">{{message}}</div>
-      </div>
-      <div class="col-md-12 mb-2">
-        <mat-form-field>
-          <mat-label>Email address</mat-label>
-          <input matInput #emailField="ngModel" type="email" name="emailToResetPassword" [(ngModel)]="emailToResetPassword" required>
-
-        </mat-form-field>
-        </div>
-      <button mat-raised-button color="accent" target="_blank" [disabled]="!emailToResetPassword" (click)="emailSent()">Send</button>
-  </div>
-  </div>
 
 

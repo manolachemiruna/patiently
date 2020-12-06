@@ -2,7 +2,7 @@ import { Doctor } from './../entitites/Doctor';
 import {Injectable} from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { Router} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../entitites/User';
 import { delay } from 'rxjs/operators';
@@ -25,7 +25,8 @@ export class AuthService {
   constructor(
     private afAuth: AngularFireAuth,
     private db: AngularFirestore,
-    private router: Router) {}
+    private router: Router,
+    private route: ActivatedRoute,) {}
 
 
 
@@ -114,13 +115,49 @@ export class AuthService {
 
   isLoggedIn() {
     if (sessionStorage.getItem('user') != null) {return true; } else {
-      this.router.navigate(['home']);
       return false; }
   }
 
   isAdmin() {
     if (sessionStorage.getItem('user') === 'adminsupport@yahoo.com') {return true; } else { return false; }
   }
+
+  sendPasswordResetRequest(email)
+ {
+
+    return this.afAuth.sendPasswordResetEmail(email).then(
+      () => {
+        sessionStorage.setItem('emailMessage', "Email successfully sent!");
+        console.log("Email sent");
+      },
+       error => {
+          this.eventAuthError.next(error);
+          sessionStorage.setItem('emailMessage', "An error occured while trying to send you the email.Please try again later!");
+      }
+    );
+ }
+
+ setPassword(password)
+{
+
+const code = this.route.snapshot.queryParams['oobCode'];
+
+this.afAuth.confirmPasswordReset(code, password)
+  .then(
+    () => {
+      console.log("Password Changed");
+      sessionStorage.setItem('passwordMessage', "Password successfully changed!");
+    },
+  error => {
+    this.eventAuthError.next(error);
+    sessionStorage.setItem('passwordMessage', "An error occured while changing your password,please try again!");
+  }
+  );
+
+}
+
+
+
 
 
 

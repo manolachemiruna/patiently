@@ -34,7 +34,8 @@ import { PatientComponent } from './patient/patient.component';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     AdminComponent,
     DoctorsComponent,
     PatientComponent,
-
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
 
   ],
   imports: [
@@ -76,7 +78,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
     MatTabsModule,
     MatTableModule,
     HttpClientModule,
-
    ],
   providers: [MatDatepickerModule, HttpClient],
   bootstrap: [AppComponent]

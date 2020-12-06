@@ -106,7 +106,7 @@ nextPage() {
   if (index < this.patients.length && index >= 0 && this.patientsOnCurrentPage.length === 4) {
     for (let i = 0; i <= 6; i++) {this.patientsOnCurrentPage.pop(); }
     console.log(this.patientsOnCurrentPage);
-    for (let i = contor; i < co; i++) {if (this.patients[i] != undefined) {this.patientsOnCurrentPage.push(this.patients[i]); } }
+    for (let i = contor; i < co; i++) {if (this.patients[i] !== undefined) {this.patientsOnCurrentPage.push(this.patients[i]); } }
     console.log(this.patientsOnCurrentPage);
     this.curentPage++;
   } else {

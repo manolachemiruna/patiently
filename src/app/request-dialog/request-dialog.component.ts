@@ -3,6 +3,7 @@ import { Appointment } from './../entitites/Appointment';
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-request-dialog',
   templateUrl: './request-dialog.component.html',
@@ -15,6 +16,8 @@ export class RequestDialogComponent implements OnInit {
   hour: string; // momentan
   patientId: string;
   doctorId: string;
+  appointments: any;
+  message: string;
   hourList = ["8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
   constructor(
               private appointmentService: AppointmentService,
@@ -23,6 +26,7 @@ export class RequestDialogComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.message = null;
     this.patientId = this.data.patientId;
     this.doctorId = this.data.doctorId;
 
@@ -37,9 +41,9 @@ export class RequestDialogComponent implements OnInit {
     appointment.hour = this.hour;
     appointment.patientId = this.patientId;
     appointment.doctorId = this.doctorId;
-    console.log(appointment);
     this.appointmentService.addAppointment(appointment);
     this.dialogRef.close();
+
 }
 
 enableBtn() {

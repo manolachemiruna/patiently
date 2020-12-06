@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
   }
 
   onClick() {
-    if (this.forgotPassword === true) { this.forgotPassword = false; } else { this.forgotPassword = true; }
+    this.router.navigate(['/forgotPassword']);
   }
 
   emailSent() {
