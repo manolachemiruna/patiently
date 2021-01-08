@@ -1,10 +1,8 @@
-import { DoctorEmail } from './../entitites/DoctorEmail';
-import { AuthService } from './../services/auth.service';
+import { ActivatedRoute } from '@angular/router';
+
 import { UserEmail } from './../entitites/UserEmail';
 import { UserService } from './../services/user.service';
-import { User } from './../entitites/User';
 import { Component, OnInit } from '@angular/core';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import {map} from 'rxjs/operators';
 /* tslint:disable */
 
@@ -15,118 +13,43 @@ import {map} from 'rxjs/operators';
 })
 export class PatientsComponent implements OnInit {
 
-  patients: any;
-  curentPage = 1;
-  currentIndex = 0;
-  patientsOnCurrentPage=new Array();
-  disease:string;
-  closeResult = '';
-  search: string;
-  doctor: DoctorEmail;
+  id:string;
+  patient: UserEmail;
+  nullable: boolean;
+  message: string;
 
-  constructor(private modalService:NgbModal,private userService: UserService,private auth:AuthService) { }
+  constructor(private route: ActivatedRoute,private userService: UserService) {
+   }
 
   ngOnInit(): void {
 
-     const email=sessionStorage.getItem('user');
-     this.userService.getDoctors().pipe(
-      map(v =>
-       v.filter(user => user.email === email)
-      )
-    ).subscribe(doctor =>
+    this.patient= new UserEmail();
+    this.nullable=false;
+    this.route.params.subscribe(params => {
+      this.id = params['id'];
+      if(this.id === undefined)
       {
-        this.doctor = doctor[0];
-      });
+        this.nullable = true;
 
-     this.userService.getPatients().pipe(
-      map(v =>
-       v.filter(user => user.doctorId === this.doctor.id)
-      )
-    ).subscribe(patient =>
-      {
-        this.patients=patient;
-        console.log(this.patients.length);
-        this.patientsOnCurrentPage.push(this.patients[this.curentPage - 1]);
-        for( let i= 0; i<this.patients.length-1 && i<3 ;i++)
-        {
-          this.patientsOnCurrentPage.push(this.patients[this.curentPage + i]);
-        }
+      }
+      console.log(this.id);
+   });
 
-        console.log(this.patientsOnCurrentPage);
-      });
-
-
-
+   if(this.nullable === false)
+   {
+   this.userService.getPatientById(this.id).subscribe
+   (value =>
+    {
+       this.patient=value[0];
+       console.log(this.patient);
+    });
+  }
+  else{
+    this.patient = new UserEmail();
+    this.patient.firstname='';
+    this.patient.lastname='';
   }
 
-
-  nextPage()
-  {
-
-
-    let contor;
-
-    let patient= this.patientsOnCurrentPage[0];
-    let index=this.patients.indexOf(patient);//iau indexul din vectorul mare al primul pacient pe pagina curenta
-    contor=index+this.patientsOnCurrentPage.length;
-    console.log(index);
-    let co=contor+3;
-
-
-    if(index<this.patients.length && index>=0 && this.patientsOnCurrentPage.length==3)
-    {
-      for(let i=0;i<=5;i++)this.patientsOnCurrentPage.pop();
-      console.log(this.patientsOnCurrentPage);
-      for(let i=contor;i<co;i++)if(this.patients[i]!=undefined)this.patientsOnCurrentPage.push(this.patients[i]);
-      console.log(this.patientsOnCurrentPage);
-      this.curentPage++;
-    }
-    else
-    {
-      var element = <HTMLInputElement> document.getElementById("next");
-      element.disabled = true;
-    }
-
-
-
-  }
-
-
-  previousPage()
-  {
-
-    let contor;
-
-    let patient= this.patientsOnCurrentPage[0];
-    let index=this.patients.indexOf(patient);//iau indexul din vectorul mare al primul pacient pe pagina curenta
-    contor=index-this.patientsOnCurrentPage.length;
-    let co=index-3;
-
-
-    if(index>0)
-    {
-      for(let i=0;i<=5;i++)this.patientsOnCurrentPage.pop();
-      for(let i=co;i<index;i++)this.patientsOnCurrentPage.push(this.patients[i]);
-      console.log(this.patientsOnCurrentPage);
-      this.curentPage--;
-    }
-    else
-    {
-      var element = <HTMLInputElement> document.getElementById("previous");
-      element.disabled = true;
-    }
-
-
-  }
-
-  searchPatient()
-  {
-
-  }
-
-  isDoctor()
-  {
-    return !this.auth.isAdmin();
   }
 
 

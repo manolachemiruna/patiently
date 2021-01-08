@@ -16,6 +16,7 @@ import { AdminGuardService } from './guards/admin-guard.service';
 const routes: Routes = [
   {path: "", component: HomeComponent},
   {path: "home", component: HomeComponent},
+  {path: "patients/:id", component: PatientsComponent, canActivate: [AuthGuardService]},
   {path: "patients", component: PatientsComponent, canActivate: [AuthGuardService]},
   {path: "appointments", component: RegisterComponent, canActivate: [AuthGuardService]},
   {path: "login", component: LoginComponent},

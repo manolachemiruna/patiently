@@ -17,14 +17,13 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit(): void {
 
     this.sent = false;
-    this.emailMessage = null;
   }
 
   emailSent() {
-    this.authService.sendPasswordResetRequest(this.emailToResetPassword);
-    this.emailMessage = sessionStorage.getItem('emailMessage');
+    this.authService.sendPasswordResetRequest(this.emailToResetPassword)
+    setTimeout(() =>{this.sent=true;this.emailMessage = sessionStorage.getItem('emailMessage');},1000);
+    this.emailMessage = 'The email is sending...';
     console.log(this.emailMessage);
-    this.sent = true;
   }
 
 

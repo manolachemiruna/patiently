@@ -32,6 +32,36 @@
   </mat-step>
 
   <mat-step>
+    <ng-template matStepLabel>Choose appointment type</ng-template>
+    <div>
+        <mat-form-field appearance="fill">
+        <mat-label>Choose appointment type</mat-label>
+          <mat-select [(ngModel)]="type" name="type" required>
+          <mat-option *ngFor="let q of types" [value]="q">
+              {{ q }}
+          </mat-option>
+      </mat-select>
+      </mat-form-field>
+
+        <button mat-button matStepperPrevious>Back</button>
+        <button id="button" mat-button matStepperNext [disabled]="!type">Next</button>
+    </div>
+</mat-step>
+
+<mat-step *ngIf="videoType()">
+  <ng-template matStepLabel>Insert conference link</ng-template>
+  <div>
+      <mat-form-field appearance="fill">
+      <mat-label>Insert conference link</mat-label>
+      <input matInput type="text" [(ngModel)]="link" name="link" required>
+      </mat-form-field>
+
+      <button mat-button matStepperPrevious>Back</button>
+      <button id="button" mat-button matStepperNext [disabled]="!link">Next</button>
+  </div>
+</mat-step>
+
+  <mat-step>
       <ng-template matStepLabel>Done</ng-template>
       <p>You are done now.</p>
       <div>

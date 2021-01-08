@@ -3,6 +3,22 @@
 <div style="display: flex">
 <div class="container">
 
+  <div class="container">
+    <mat-form-field id="search">
+      <mat-label><mat-icon>search</mat-icon>Search..</mat-label>
+      <input matInput type="text" name="search" required  [(ngModel)]="search"  (change)="getPatientByName(search)">
+    </mat-form-field>
+    </div>
+
+    <div *ngFor=" let pat of searchedPatient" class="col-md-12 mb-2">
+      <table>
+        <tr>
+      <th><p>{{"Patient found: "+pat.lastname+" "+pat.firstname}}</p><p> </p></th>
+        <th><button class=" btn btn-info" (click)="navigate($event,pat.id)">See ECG</button></th>
+       </tr>
+    </table>
+    </div>
+
   <nav aria-label="Page navigation example">
     <ul class="pagination">
       <li class="page-item"><a class="page-link" (click)="previousPage()" id="previous">Previous</a></li>
@@ -12,13 +28,13 @@
 
   <div class="col-md-6 mb-4" *ngFor="let p of patientsOnCurrentPage,let i=index">
 
-    <div class="card gradient-card" id={{p.id}}>
+    <div class="card gradient-card" id={{p.id}} (click)="navigate($event,p.id)">
 
         <div class="card-image">
           <a>
             <div class="text-black d-flex h-100 mask blue-gradient-rgba">
               <div class="first-content align-self-center p-3">
-                <h3 class="card-title">{{p.firstname+" "+p.lastname}}</h3>
+                <h3 class="card-title">{{p.lastname+" "+p.firstname}}</h3>
               </div>
               <div class="second-content align-self-center mx-auto text-center">
                 <i class="far fa-heart fa-3x"></i>
@@ -34,7 +50,6 @@
           <button class="btn btn-success" *ngIf="sendMessage" (click)="send(p.id,message)">Send</button>
           <button type="button" class="btn btn-dark" *ngIf="!sendMessage" (click)="onClickSendMessage()">Send message</button>
           <button type="button" class="btn btn-primary" (click)="openNewRequestDialog(appointment,p)">Set appointment</button>
-          <button type="button" class="btn btn-success">Set video appointment</button>
         </div>
 
         <!-- Content -->

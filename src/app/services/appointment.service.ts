@@ -44,7 +44,9 @@ export class AppointmentService {
       date: appointment.date,
       hour: appointment.hour,
       patientId: appointment.patientId,
-      doctorId: appointment.doctorId
+      doctorId: appointment.doctorId,
+      type: appointment.type,
+      link: appointment.link,
     });
   }
 

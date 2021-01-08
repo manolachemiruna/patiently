@@ -18,6 +18,9 @@ export class RequestDialogComponent implements OnInit {
   doctorId: string;
   appointments: any;
   message: string;
+  type: string;
+  link: string;
+  types = ['video appointment', 'physical appointment'];
   hourList = ["8:00", "9:00", "10:00", "11:00", "12:00", "13:00", "14:00", "15:00", "16:00", "17:00"];
   constructor(
               private appointmentService: AppointmentService,
@@ -29,6 +32,8 @@ export class RequestDialogComponent implements OnInit {
     this.message = null;
     this.patientId = this.data.patientId;
     this.doctorId = this.data.doctorId;
+    this.type=null;
+    this.link=null;
 
   }
 
@@ -41,8 +46,12 @@ export class RequestDialogComponent implements OnInit {
     appointment.hour = this.hour;
     appointment.patientId = this.patientId;
     appointment.doctorId = this.doctorId;
+    appointment.link = this.link;
+    appointment.type = this.type;
     this.appointmentService.addAppointment(appointment);
     this.dialogRef.close();
+    this.type=null;
+    this.link=null;
 
 }
 
@@ -60,4 +69,9 @@ enableBtn() {
   return true;
  }
 
+ videoType()
+ {
+   if(this.type === 'video appointment')return true;
+   else return false;
+ }
 }

@@ -1,3 +1,4 @@
+import { Router } from '@angular/router';
 import { MessagesService } from './../services/messages.service';
 import { UserEmail } from './../entitites/UserEmail';
 import { Appointment } from './../entitites/Appointment';
@@ -24,10 +25,15 @@ export class NotificationsComponent implements OnInit {
   patientsOnCurrentPage = new Array<UserEmail>();
   curentPage = 1;
   currentIndex = 0;
+  search: string;
+  searchedPatient: any;
 
 
 
-  constructor(private dialog: MatDialog, private userService: UserService, private messageService: MessagesService) { }
+  constructor(private dialog: MatDialog,
+              private userService: UserService,
+              private messageService: MessagesService,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -140,6 +146,35 @@ previousPage() {
   }
 
 
+}
+
+navigate(event, id) {
+  console.log(id);
+  this.router.navigate(['/patients', id]);
+}
+
+
+getPatientByName(fullName) {
+
+
+  let fullname = fullName.replace(/\s/g, '');
+  fullname = fullname.toUpperCase();
+  const regex = new RegExp("^" + fullname + ".*");
+  console.log(fullname);
+
+  if (fullname !== '' && fullname != null) {
+  this.userService.getPatients().pipe(
+    map(v =>
+      v.filter(user => (user.lastname + user.firstname).toUpperCase === fullname || (user.firstname + user.lastname).toUpperCase() === fullname || user.lastname.toUpperCase() === fullname || user.firstname.toUpperCase() === fullname || regex.test(user.lastname.toUpperCase()) || regex.test(user.firstname.toUpperCase()) || regex.test((user.lastname + user.firstname).toUpperCase()) || regex.test((user.firstname + user.lastname).toUpperCase()))
+     )
+  ).subscribe(patient => {
+      this.searchedPatient = patient;
+      console.log(this.searchedPatient);
+      if (this.searchedPatient.length === 0) {
+        this.message = 'There is no patient with this name!';
+      } else { this.message = null; }
+    });
+  }
 }
 
 }

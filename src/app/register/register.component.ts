@@ -93,6 +93,8 @@ export class RegisterComponent implements OnInit {
             hour: i.hour,
             date: i.date,
             id: i.id,
+            type: i.type,
+            link: i.link,
             patientName : patient[0].lastname + " " + patient[0].firstname
           };
           this.displayAppointments.push(display);
@@ -105,6 +107,8 @@ export class RegisterComponent implements OnInit {
             hour: i.hour,
             date: i.date,
             id: i.id,
+            type: i.type,
+            link: i.link,
             patientName : patient[0].lastname + " " + patient[0].firstname
           };
           this.displayNextAppointments.push(display);
@@ -114,6 +118,12 @@ export class RegisterComponent implements OnInit {
     });
   });
 
+  }
+
+  videoType(type)
+  {
+    if(type === 'video appointment')return true;
+    else return false;
   }
 
 }

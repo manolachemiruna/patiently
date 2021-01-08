@@ -4,5 +4,7 @@ export class Appointment
   doctorId: string;
   date: any;
   hour: string;
+  type: string;
+  link: string;
   id: string;
 }

@@ -27,10 +27,9 @@ export class ResetPasswordComponent implements OnInit {
   change() {
     if (this.password === this.Cpassword) {
       this.authService.setPassword(this.password);
-      this.passwordMessage = sessionStorage.getItem('passwordMessage');
+      setTimeout(() =>{this.passwordNotMatch=null;this.passwordMessage = sessionStorage.getItem('passwordMessage'); this.sent = true;},1000);
       console.log(this.passwordMessage);
-      this.sent = true;
-    } else { this.passwordNotMatch = 'The passwords that you entered do not match,please try again!'; }
+    } else {this.passwordMessage=null; this.passwordNotMatch = 'The passwords that you entered do not match,please try again!'; }
 
   }
 
