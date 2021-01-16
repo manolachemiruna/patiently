@@ -5,7 +5,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { ActivatedRoute, Router} from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../entitites/User';
-import { delay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -38,11 +37,18 @@ export class AuthService {
   login( email: string, password: string) {
       this.afAuth.signInWithEmailAndPassword(email, password)
       .catch(error => {
-        this.eventAuthError.next(error);
+        if (error.code === 'auth/invalid-email') {
+          localStorage.setItem('message','Please enter a valid email address!');
+      } else if (error.code === 'auth/user-not-found') {
+         localStorage.setItem('message','There is no user coresponding to this identifier!');
+      } else if (error.code === 'auth/wrong-password') {
+          localStorage.setItem('message','The password is invalid or the user does not have a password!');
+      }
       })
       .then(userCredential => {
         if (userCredential) {
           sessionStorage.setItem('user', email);
+          localStorage.removeItem('message');
           if (this.isAdmin()) { this.router.navigate(['/admin']); } else { this.router.navigate(['/appointments']); }
         }
       });

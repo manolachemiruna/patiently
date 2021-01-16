@@ -1,6 +1,7 @@
 <app-menu></app-menu>
 <div class="alert alert-danger" role="alert" *ngIf="roleErrorMessage">{{roleErrorMessage}}</div>
 <div class="alert alert-danger" role="alert" *ngIf="userPasswordError">{{userPasswordError}}</div>
+<app-error-message [message]='errorMessage'></app-error-message>
 <div class="container" style="font-size: 20px">
   <div class="row">
     <div class="col-md-12 mb-2">
@@ -20,7 +21,7 @@
     </div>
 
       <button class="mat-raised-button" color="link" target="_blank" [disabled]="!email || !password" (click)="login()">Login</button>
-      <button mat-button color="accent" (click)="onClick()">Forgot your password?</button>
+      <button mat-button color="accent"  target="_blank" (click)="onClick()">Forgot your password?</button>
   </div>
 </div>
 

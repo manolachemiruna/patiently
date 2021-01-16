@@ -88,6 +88,9 @@ export class RegisterComponent implements OnInit {
    appointments.forEach(i => {
       this.userService.getPatientById(i.patientId).subscribe(patient => {
           this.patients.push(patient[0]);
+          let month = this.todayDate.split("/")[1].padStart(2, "0");
+          let month2 = i.date.split("/")[1].padStart(2, "0");
+          console.log(month);
           if (i.date === this.todayDate) {
           const display = {
             hour: i.hour,
@@ -102,7 +105,7 @@ export class RegisterComponent implements OnInit {
           console.log(this.numberOfAppointments);
           sessionStorage.removeItem('numberOfAppointments');
           sessionStorage.setItem('numberOfAppointments', this.numberOfAppointments.toString());
-        } else {
+        } else if(month===month2) {
           const display = {
             hour: i.hour,
             date: i.date,

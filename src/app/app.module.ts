@@ -36,6 +36,7 @@ import {MatTableModule} from '@angular/material/table';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +54,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     PatientComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ErrorMessageComponent,
 
   ],
   imports: [

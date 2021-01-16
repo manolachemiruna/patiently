@@ -1,6 +1,6 @@
 import { UserService } from './../services/user.service';
 import { AuthService } from './../services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../entitites/User';
 import {map} from 'rxjs/operators';
@@ -23,9 +23,10 @@ export class LoginComponent implements OnInit {
   searchedDoctor;
   roleErrorMessage: string;
   userPasswordError: string;
+  errorMessage;
 
   constructor(private auth: AuthService, private userService: UserService,
-              private router: Router) { }
+              private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
 
@@ -49,6 +50,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
+    this.errorMessage=null;
+    this.roleErrorMessage=null;
     this.user = new User();
     this.user.email = this.email;
     this.user.password = this.password;
@@ -59,7 +62,13 @@ export class LoginComponent implements OnInit {
     ).subscribe(doctor => {
         this.searchedDoctor = doctor[0];
         console.log(this.searchedDoctor);
-        if (this.searchedDoctor || this.email === "adminsupport@yahoo.com") {this.auth.login(this.user.email, this.user.password); } else { this.roleErrorMessage = "You are not allowed to login, please use mobile app instead!"; }
+        if (this.searchedDoctor || this.email === "adminsupport@yahoo.com")
+         {
+           this.auth.login(this.user.email, this.user.password);
+            this.errorMessage=localStorage.getItem('message');
+
+        }
+          else { this.roleErrorMessage = "You are not allowed to login, please use mobile app instead!"; }
       });
 
     }
