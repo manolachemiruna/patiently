@@ -23,8 +23,9 @@
     <!-- Content -->
     <div class="card-body">
       <h4 class="text-uppercase font-weight-bold my-4">Patient's ECG</h4>
-      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam vel dolores qui, necessitatibus aut eaque magni mollitia tenetur molestiae sit quae quos quaerat amet exercitationem atque animi odio.</p>
-    </div>
+      <p-toast [style]="{marginTop: '80px'}"></p-toast>
+      <p-chart type="line" [data]="chartData" (onDataSelect)="selectData($event)"></p-chart>
+     </div>
   </div>
   <div *ngIf="message" class="alert alert-info" role="alert">
     {{message}}

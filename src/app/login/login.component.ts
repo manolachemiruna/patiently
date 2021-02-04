@@ -55,21 +55,7 @@ export class LoginComponent implements OnInit {
     this.user = new User();
     this.user.email = this.email;
     this.user.password = this.password;
-    this.userService.getDoctors().pipe(
-      map(v =>
-       v.filter(user => user.email === this.email)
-      )
-    ).subscribe(doctor => {
-        this.searchedDoctor = doctor[0];
-        console.log(this.searchedDoctor);
-        if (this.searchedDoctor || this.email === "adminsupport@yahoo.com")
-         {
-           this.auth.login(this.user.email, this.user.password);
-            this.errorMessage=localStorage.getItem('message');
-
-        }
-          else { this.roleErrorMessage = "You are not allowed to login, please use mobile app instead!"; }
-      });
+    this.auth.login(this.user.email, this.user.password);
 
     }
 

@@ -72,5 +72,11 @@ export class UserService {
     );
   }
 
+  getDoctorByEmail(email) {
+    return this.getDoctors().pipe(
+      map(p => p.filter(patient => patient.email === email))
+    );
+  }
+
 
 }

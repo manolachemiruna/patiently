@@ -58,10 +58,8 @@ export class RegisterComponent implements OnInit {
 
   setDate() {
     this.todayDate = new Date();
-    console.log(this.todayDate);
     const datePipe = new DatePipe("en-US");
     this.todayDate = datePipe.transform(this.todayDate, 'dd/MM/yyyy');
-    console.log(this.todayDate);
   }
 
   getDoctor() {

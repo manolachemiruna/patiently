@@ -49,7 +49,8 @@ export class NotificationsComponent implements OnInit {
 
     this.userService.getPatients().pipe(
       map(v =>
-       v.filter(user => user.doctorId === this.doctor.id)
+       v.filter(user => user.doctorId ===
+         this.doctor.id)
       )
     ).subscribe(patient => {
         this.patients = patient;

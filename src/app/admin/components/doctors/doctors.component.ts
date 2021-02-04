@@ -1,8 +1,8 @@
-import { LoginComponent } from './../login/login.component';
-import { DoctorEmail } from './../entitites/DoctorEmail';
-import { Doctor } from './../entitites/Doctor';
-import { UserService } from './../services/user.service';
-import { AuthService } from './../services/auth.service';
+import { LoginComponent } from '../../../login/login.component';
+import { DoctorEmail } from '../../../entitites/DoctorEmail';
+import { Doctor } from '../../../entitites/Doctor';
+import { UserService } from '../../../services/user.service';
+import { AuthService } from '../../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import {delay, map} from 'rxjs/operators';
 @Component({
