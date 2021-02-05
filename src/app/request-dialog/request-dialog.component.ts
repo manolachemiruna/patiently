@@ -3,7 +3,7 @@ import { Appointment } from './../entitites/Appointment';
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-request-dialog',
   templateUrl: './request-dialog.component.html',
@@ -12,8 +12,8 @@ import { map } from 'rxjs/operators';
 export class RequestDialogComponent implements OnInit {
 
   errorMessage: string;
-  date: any; // momentan
-  hour: string; // momentan
+  date: any;
+  hour: string;
   patientId: string;
   doctorId: string;
   appointments: any;
@@ -38,7 +38,7 @@ export class RequestDialogComponent implements OnInit {
 
   }
 
-  send(): void {
+  public send(): void {
 
     const datePipe = new DatePipe("en-US");
     this.date = datePipe.transform(this.date, 'dd/MM/yyyy');
@@ -54,25 +54,24 @@ export class RequestDialogComponent implements OnInit {
     this.type=null;
     this.link=null;
 
-}
+  }
 
-enableBtn() {
+  public enableBtn(): void {
 
-  const element = document.getElementById("button") as HTMLInputElement;
-  element.disabled = false;
-}
+    const element = document.getElementById("button") as HTMLInputElement;
+    element.disabled = false;
+  }
 
 
- verifyInput(value) {
+  public verifyInput(value): boolean {
 
-  const element = document.getElementById("button") as HTMLInputElement;
-  if (value != null) { element.disabled = false; } else { element.disabled = true; }
-  return true;
- }
+    const element = document.getElementById("button") as HTMLInputElement;
+    if (value != null) { element.disabled = false; } else { element.disabled = true; }
+    return true;
+  }
 
- videoType()
- {
-   if(this.type === 'video appointment')return true;
-   else return false;
- }
+  public videoType(): boolean {
+    if(this.type === 'video appointment')return true;
+    else return false;
+  }
 }

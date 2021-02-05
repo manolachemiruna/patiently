@@ -1,47 +1,47 @@
 <table style="width:100%">
-  <tr>
-    <th>
-    Add Patient
-    </th>
-    <th>
-   Find Patient
-    </th>
-  </tr>
-  <tr>
+    <tr>
+      <th>
+      Add Patient
+      </th>
+      <th>
+    Find Patient
+      </th>
+    </tr>
+    <tr>
     <td><div  class="container" style="font-size: 20px">
       <div class="row">
        <div class="col-md-12 mb-2">
-        <mat-form-field>
-          <mat-label> First Name</mat-label>
-          <input matInput type="text" name="firstname" [(ngModel)]="firstname" required>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label> First Name</mat-label>
+            <input matInput type="text" name="firstname" [(ngModel)]="firstname" required>
+          </mat-form-field>
        </div>
        <div class="col-md-12 mb-2">
-        <mat-form-field>
-          <mat-label>Last Name</mat-label>
-          <input matInput type="text" name="lastname" [(ngModel)]="lastname" required>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Last Name</mat-label>
+            <input matInput type="text" name="lastname" [(ngModel)]="lastname" required>
+          </mat-form-field>
        </div>
        <div class="col-md-12 mb-2">
-        <mat-form-field>
-          <mat-label>Doctor's id</mat-label>
-          <input matInput type="text" name="doctorId" [(ngModel)]="doctorId" required>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Doctor's id</mat-label>
+            <input matInput type="text" name="doctorId" [(ngModel)]="doctorId" required>
+          </mat-form-field>
        </div>
         <div class="col-md-12 mb-2">
-        <mat-form-field>
-          <mat-label>Enter email</mat-label>
-          <input matInput type="email" name="email" [(ngModel)]="email" required>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Enter email</mat-label>
+            <input matInput type="email" name="email" [(ngModel)]="email" required>
+          </mat-form-field>
         </div>
         <div class="col-md-12 mb-2">
-        <mat-form-field>
-          <mat-label>Enter password</mat-label>
-          <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" required>
-          <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-          <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-          </button>
-        </mat-form-field>
+          <mat-form-field>
+            <mat-label>Enter password</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" required>
+            <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
         </div>
 
           <button class="mat-raised-button" color="link" target="_blank" [disabled]="!email || !password || !firstname || !lastname || !doctorId" (click)="createPatient(email,password)">Create Patient</button>
@@ -51,10 +51,10 @@
     <td>
 
         <div class="col-md-12 mb-2">
-        <mat-form-field id="search">
-          <mat-label><mat-icon>search</mat-icon>Search..</mat-label>
-          <input matInput type="text" name="search" [(ngModel)]="search" required (change)="getPatientByInput(search)">
-        </mat-form-field>
+          <mat-form-field id="search">
+            <mat-label><mat-icon>search</mat-icon>Search..</mat-label>
+            <input matInput type="text" name="search" [(ngModel)]="search" required (change)="getPatientByInput(search)">
+          </mat-form-field>
         </div>
 
 
@@ -62,9 +62,9 @@
         <div *ngFor=" let pat of searchedPatient" class="col-md-12 mb-2">
           <table>
             <tr>
-          <td><p>{{"Patient found: "+pat.firstname+" "+pat.lastname}}</p><p> </p></td>
-          <td><button class=" btn btn-danger" (click)="deletePatient(searchedPatient)">Delete Patient</button></td>
-           </tr>
+              <td><p>{{"Patient found: "+pat.firstname+" "+pat.lastname}}</p><p> </p></td>
+              <td><button class=" btn btn-danger" (click)="deletePatient(searchedPatient)">Delete Patient</button></td>
+            </tr>
         </table>
         </div>
 

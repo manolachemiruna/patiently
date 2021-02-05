@@ -44,37 +44,44 @@ export class UserService {
    }
 
    public getDoctors(): Observable<DoctorEmail[]> {
+
      return this.doctors;
    }
 
 
    public getPatients(): Observable<UserEmail[]> {
+
      return this.patients;
    }
 
-   deleteDoctor(doctor) {
+   public deleteDoctor(doctor): void {
+
     this.doctorDoc = this.db.doc(`doctors/${doctor.id}`);
     this.doctorDoc.delete();
   }
 
-  deletePatient(patient) {
+  public deletePatient(patient): void {
+
     this.userDoc = this.db.doc(`patients/${patient.id}`);
     this.userDoc.delete();
   }
 
-  getDoctorFromRegistry(firstname, lastname) {
+  public getDoctorFromRegistry(firstname, lastname): Observable<Object> {
+
     return this.http.get("https://regmed.cmr.ro/api/v1/public/cautare/" + firstname + lastname);
   }
 
-  getPatientById(id) {
+  public getPatientById(id: string): Observable<UserEmail[]> {
+
     return this.getPatients().pipe(
       map(p => p.filter(patient => patient.id === id))
     );
   }
 
-  getDoctorByEmail(email) {
+  public getDoctorByEmail(email: string): Observable<DoctorEmail[]> {
+
     return this.getDoctors().pipe(
-      map(p => p.filter(patient => patient.email === email))
+      map(p => p.filter(doctor => doctor.email === email))
     );
   }
 

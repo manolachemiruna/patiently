@@ -19,7 +19,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.sent = false;
   }
 
-  emailSent() {
+  public emailSent(): void {
     this.authService.sendPasswordResetRequest(this.emailToResetPassword)
     setTimeout(() =>{this.sent=true;this.emailMessage = sessionStorage.getItem('emailMessage');},1000);
     this.emailMessage = 'The email is sending...';

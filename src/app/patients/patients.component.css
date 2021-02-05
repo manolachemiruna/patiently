@@ -1,25 +1,12 @@
-.card
-{
-border: none;
-border-radius: 2rem;
-border-color: lightseagreen;
-transition: all 0.2s;
-box-shadow: 0 0.5rem 1rem 0 rgba(29, 145, 160, 30);
-padding: 6em;
-width: 40%;
-margin: 50px auto 0;
-align-self: center;
-}
+  .card
+  {
+  border: none;
+  border-radius: 2rem;
+  border-color: lightseagreen;
+  transition: all 0.2s;
+  box-shadow: 0 0.5rem 1rem 0 rgba(29, 145, 160, 30);
+  width: 60%;
+  margin: 50px auto 0;
+  align-self: center;
+  }
 
-
-#search
-{
-  display:inline-block;
-  margin-right: 2rem !important;
-  width: calc(80%-2rem) !important;
-}
-
-mat-form-field {
-  margin-left: 1rem;
-  width: calc(50% - 2rem);
-}

@@ -1,32 +1,22 @@
-<app-menu></app-menu>
+<app-menu [numberOfAppointments]="numberOfAppointments"></app-menu>
 
 
   <div class="card gradient-card">
-
     <div class="card-image">
       <a>
         <div class="text-black d-flex h-100 mask blue-gradient-rgba">
           <div class="first-content align-self-center p-3">
           <h2 class="card-title">{{patient.lastname+" "+patient.firstname}}</h2>
           </div>
-          <div class="second-content align-self-center mx-auto text-center">
-            <i class="far fa-heart fa-3x"></i>
-          </div>
         </div>
       </a>
     </div>
 
-    <!-- Data -->
-    <div class="third-content ml-auto mr-4 mb-2">
-    </div>
-
     <!-- Content -->
     <div class="card-body">
-      <h4 class="text-uppercase font-weight-bold my-4">Patient's ECG</h4>
-      <p-toast [style]="{marginTop: '80px'}"></p-toast>
+      <p-toast class="mb-2"></p-toast>
       <p-chart type="line" [data]="chartData" (onDataSelect)="selectData($event)"></p-chart>
-     </div>
+    </div>
   </div>
-  <div *ngIf="message" class="alert alert-info" role="alert">
-    {{message}}
-   </div>
+
+  <div *ngIf="message" class="alert alert-info" role="alert">{{message}}</div>

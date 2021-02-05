@@ -12,6 +12,7 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void {
 
+    sessionStorage.clear();
     this.auth.logout();
   }
 

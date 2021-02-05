@@ -1,4 +1,4 @@
-<app-menu></app-menu>
+<app-menu [numberOfAppointments]="numberOfAppointments"></app-menu>
 
 <div style="display: flex">
 <div class="container">
@@ -8,15 +8,15 @@
       <mat-label><mat-icon>search</mat-icon>Search..</mat-label>
       <input matInput type="text" name="search" required  [(ngModel)]="search"  (change)="getPatientByName(search)">
     </mat-form-field>
-    </div>
+  </div>
 
     <div *ngFor=" let pat of searchedPatient" class="col-md-12 mb-2">
       <table>
         <tr>
-      <th><p>{{"Patient found: "+pat.lastname+" "+pat.firstname}}</p><p> </p></th>
-        <th><button class=" btn btn-info" (click)="navigate($event,pat.id)">See ECG</button></th>
-       </tr>
-    </table>
+          <th><p>{{"Patient found: "+pat.lastname+" "+pat.firstname}}</p><p> </p></th>
+          <th><button class=" btn btn-info" (click)="navigate($event,pat.id)">See ECG</button></th>
+        </tr>
+      </table>
     </div>
 
   <nav aria-label="Page navigation example">
@@ -29,7 +29,6 @@
   <div class="col-md-6 mb-4" *ngFor="let p of patientsOnCurrentPage,let i=index">
 
     <div class="card gradient-card" id={{p.id}} (click)="navigate($event,p.id)">
-
         <div class="card-image">
           <a>
             <div class="text-black d-flex h-100 mask blue-gradient-rgba">
@@ -47,21 +46,21 @@
         <!-- Data -->
         <div class="third-content ml-auto mr-4 mb-2">
           <textarea class="md-textarea form-control" *ngIf="sendMessage"[(ngModel)]="message"></textarea>
-          <button class="btn btn-success" *ngIf="sendMessage" (click)="send(p.id,message)">Send</button>
+          <div *ngIf="sendMessage" class=" ml-2 mt-2 row">
+            <button class="ml-2 btn btn-success" (click)="send(p.id,message)">Send</button>
+            <button class="ml-2 btn btn-dark" (click)="cancel()">Cancel</button>
+          </div>
           <button type="button" class="btn btn-dark" *ngIf="!sendMessage" (click)="onClickSendMessage()">Send message</button>
-          <button type="button" class="btn btn-primary" (click)="openNewRequestDialog(appointment,p)">Set appointment</button>
+          <button type="button" class="btn btn-primary" *ngIf="!sendMessage" (click)="openNewRequestDialog(appointment,p)">Set appointment</button>
         </div>
 
         <!-- Content -->
         <div class="card-body">
-          <h4 class="text-uppercase font-weight-bold my-4">Patient's ECG</h4>
-          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam vel dolores qui, necessitatibus aut eaque magni mollitia tenetur molestiae sit quae quos quaerat amet exercitationem atque animi odio.</p>
+          <h4 class="text-uppercase font-weight-bold my-4">Press for Patient's ECG</h4>
         </div>
 
     </div>
-    <!-- Card -->
 
   </div>
-  <!--Grid column-->
 </div>
 

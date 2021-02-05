@@ -3,7 +3,7 @@ import { AuthService } from './../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../entitites/User';
-import {map} from 'rxjs/operators';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -32,24 +32,20 @@ export class LoginComponent implements OnInit {
 
     this.roleErrorMessage = null;
     this.userPasswordError = null;
-    this.auth.eventAuthError$.subscribe( data => {
-      this.authError = data;
-    });
-
     this.forgotPassword = false;
 
   }
 
-  onClick() {
+  public onClick(): void {
     this.router.navigate(['/forgotPassword']);
   }
 
-  emailSent() {
+  public emailSent(): void {
     this.message = "Email successfully sent!";
     this.sent = true;
   }
 
-  login() {
+  public login(): void {
     this.errorMessage=null;
     this.roleErrorMessage=null;
     this.user = new User();
@@ -57,6 +53,6 @@ export class LoginComponent implements OnInit {
     this.user.password = this.password;
     this.auth.login(this.user.email, this.user.password);
 
-    }
+  }
 
 }

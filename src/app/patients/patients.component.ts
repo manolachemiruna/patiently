@@ -1,5 +1,5 @@
+import { AppointmentService } from './../services/appointment.service';
 import { ActivatedRoute } from '@angular/router';
-
 import { UserEmail } from './../entitites/UserEmail';
 import { UserService } from './../services/user.service';
 import { Component, OnInit } from '@angular/core';
@@ -18,14 +18,21 @@ export class PatientsComponent implements OnInit {
   nullable: boolean;
   message: string;
   chartData:any;
+  labels=[];
+  numberOfAppointments: number;
 
-  constructor(private route: ActivatedRoute,private userService: UserService, private messageService :MessageService) {
+  constructor(private route: ActivatedRoute,private userService: UserService,
+     private messageService :MessageService, private appointmentService: AppointmentService) {
    }
 
   ngOnInit(): void {
 
+    let uid = sessionStorage.getItem('uid');
+    this.appointmentService.getAppointmentsByDoctor(uid).subscribe(appointments => this.numberOfAppointments = appointments.length);
+
+    for(let i=1;i<=120;i++)this.labels.push('');
     this.chartData= {
-      labels: [' ', ' ', ' ', ' ', ' ', ' ', ' ',' ', ' ', ' ', ' ', ' '],
+      labels: this.labels,
       datasets: [
           {
               label: 'Now',
@@ -50,7 +57,6 @@ export class PatientsComponent implements OnInit {
         this.nullable = true;
 
       }
-      console.log(this.id);
    });
 
    if(this.nullable === false)
@@ -59,7 +65,6 @@ export class PatientsComponent implements OnInit {
    (value =>
     {
        this.patient=value[0];
-       console.log(this.patient);
     });
   }
   else{

@@ -24,7 +24,7 @@ export class ResetPasswordComponent implements OnInit {
     this.sent = false;
   }
 
-  change() {
+  public change(): void {
     if (this.password === this.Cpassword) {
       this.authService.setPassword(this.password);
       setTimeout(() =>{this.passwordNotMatch=null;this.passwordMessage = sessionStorage.getItem('passwordMessage'); this.sent = true;},1000);

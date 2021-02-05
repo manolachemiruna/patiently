@@ -1,4 +1,5 @@
-<app-menu></app-menu>
+<app-menu [numberOfAppointments]="numberOfAppointments"></app-menu>
+
 <mat-tab-group>
   <mat-tab label="Today's" #doctors>
     <div class="outer" *ngFor="let p of displayAppointments,let i=index">
@@ -7,8 +8,8 @@
           <div class="card-body">
             <h5 class="card-title">{{p.patientName}}</h5>
             <div class= "row">
-            <p class="col-sm-6">{{'Date: '+p.date}}</p>
-            <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
+              <p class="col-sm-6">{{'Date: '+p.date}}</p>
+              <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
             </div>
             <div class= "row">
               <p class="col-sm-6">{{'Type: '+p.type}}</p>
@@ -23,8 +24,8 @@
           <div class="card-body">
             <h5 class="card-title">{{p.patientName}}</h5>
               <div class= "row">
-              <p class="col-sm-6">{{'Date: '+p.date}}</p>
-              <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
+                <p class="col-sm-6">{{'Date: '+p.date}}</p>
+                <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
               </div>
               <div class= "row">
                 <p class="col-sm-6">{{'Type: '+p.type}}</p>
@@ -44,8 +45,8 @@
           <div class="card-body">
             <h5 class="card-title">{{p.patientName}}</h5>
             <div class= "row">
-            <p class="col-sm-6">{{'Date: '+p.date}}</p>
-            <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
+              <p class="col-sm-6">{{'Date: '+p.date}}</p>
+              <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
             </div>
             <div class= "row">
               <p class="col-sm-6">{{'Type: '+p.type}}</p>
@@ -60,8 +61,8 @@
           <div class="card-body">
             <h5 class="card-title">{{p.patientName}}</h5>
               <div class= "row">
-              <p class="col-sm-6">{{'Date: '+p.date}}</p>
-              <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
+                <p class="col-sm-6">{{'Date: '+p.date}}</p>
+                <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
               </div>
               <div class= "row">
                 <p class="col-sm-6">{{'Type: '+p.type}}</p>

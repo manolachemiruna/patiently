@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 })
 export class MenuComponent implements OnInit {
 
-  numberOfAppointments: string;
+  @Input() numberOfAppointments: string;
   admin: boolean;
   loggedIn: boolean;
 
@@ -19,14 +19,8 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
 
     this.admin = this.auth.isAdmin();
-    this.numberOfAppointments = sessionStorage.getItem('numberOfAppointments');
     if (this.auth.isLoggedIn()) { this.loggedIn = true; }
     else { this.loggedIn = false; }
-  }
-
-  getNumberOfAppointments($event)
-  {
-    this.numberOfAppointments = sessionStorage.getItem('numberOfAppointments');
   }
 
 }

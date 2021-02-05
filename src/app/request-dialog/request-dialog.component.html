@@ -1,73 +1,73 @@
 <div *ngIf="message" class="alert alert-danger" role="alert">{{message}}</div>
 <mat-horizontal-stepper #stepper>
   <mat-step>
-      <ng-template matStepLabel>Fill in the date</ng-template>
-      <mat-form-field appearance="fill">
-        <mat-label>Choose a date</mat-label>
-        <input matInput [matDatepicker]="picker" [min]="todayDate" [(ngModel)]="date" required>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button id="button" mat-button matStepperNext [disabled]="!date">Next</button>
-      </div>
+        <ng-template matStepLabel>Fill in the date</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>Choose a date</mat-label>
+            <input matInput [matDatepicker]="picker" [min]="todayDate" [(ngModel)]="date" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button id="button" mat-button matStepperNext [disabled]="!date">Next</button>
+        </div>
   </mat-step>
 
   <mat-step>
-      <ng-template matStepLabel>Choose hour</ng-template>
-      <div>
+        <ng-template matStepLabel>Choose hour</ng-template>
+        <div>
           <mat-form-field appearance="fill">
-          <mat-label>Choose hour</mat-label>
-            <mat-select [(ngModel)]="hour" name="quarter" required>
-            <mat-option *ngFor="let q of hourList" [value]="q">
+            <mat-label>Choose hour</mat-label>
+              <mat-select [(ngModel)]="hour" name="quarter" required>
+              <mat-option *ngFor="let q of hourList" [value]="q">
+                  {{ q }}
+              </mat-option>
+              </mat-select>
+          </mat-form-field>
+
+            <button mat-button matStepperPrevious>Back</button>
+            <button id="button" mat-button matStepperNext [disabled]="!hour">Next</button>
+        </div>
+  </mat-step>
+
+  <mat-step>
+      <ng-template matStepLabel>Choose appointment type</ng-template>
+      <div>
+        <mat-form-field appearance="fill">
+          <mat-label>Choose appointment type</mat-label>
+            <mat-select [(ngModel)]="type" name="type" required>
+            <mat-option *ngFor="let q of types" [value]="q">
                 {{ q }}
             </mat-option>
-        </mat-select>
+            </mat-select>
         </mat-form-field>
 
           <button mat-button matStepperPrevious>Back</button>
-          <button id="button" mat-button matStepperNext [disabled]="!hour">Next</button>
+          <button id="button" mat-button matStepperNext [disabled]="!type">Next</button>
       </div>
   </mat-step>
 
-  <mat-step>
-    <ng-template matStepLabel>Choose appointment type</ng-template>
+  <mat-step *ngIf="videoType()">
+    <ng-template matStepLabel>Insert conference link</ng-template>
     <div>
         <mat-form-field appearance="fill">
-        <mat-label>Choose appointment type</mat-label>
-          <mat-select [(ngModel)]="type" name="type" required>
-          <mat-option *ngFor="let q of types" [value]="q">
-              {{ q }}
-          </mat-option>
-      </mat-select>
-      </mat-form-field>
+          <mat-label>Insert conference link</mat-label>
+          <input matInput type="text" [(ngModel)]="link" name="link" required>
+        </mat-form-field>
 
         <button mat-button matStepperPrevious>Back</button>
-        <button id="button" mat-button matStepperNext [disabled]="!type">Next</button>
+        <button id="button" mat-button matStepperNext [disabled]="!link">Next</button>
     </div>
-</mat-step>
-
-<mat-step *ngIf="videoType()">
-  <ng-template matStepLabel>Insert conference link</ng-template>
-  <div>
-      <mat-form-field appearance="fill">
-      <mat-label>Insert conference link</mat-label>
-      <input matInput type="text" [(ngModel)]="link" name="link" required>
-      </mat-form-field>
-
-      <button mat-button matStepperPrevious>Back</button>
-      <button id="button" mat-button matStepperNext [disabled]="!link">Next</button>
-  </div>
-</mat-step>
+  </mat-step>
 
   <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      <p>You are done now.</p>
-      <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="send()">Apply</button>
-      </div>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are done now.</p>
+        <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button (click)="send()">Apply</button>
+        </div>
   </mat-step>
 
 </mat-horizontal-stepper>

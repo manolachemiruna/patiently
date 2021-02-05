@@ -40,6 +40,9 @@ import {ChartModule} from 'primeng/chart';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DoctorsComponent } from './admin/components/doctors/doctors.component';
+import {ButtonModule} from 'primeng/button';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,8 +87,10 @@ import { DoctorsComponent } from './admin/components/doctors/doctors.component';
     HttpClientModule,
     ChartModule,
     ToastModule,
+    ButtonModule,
+    ConfirmDialogModule
    ],
-  providers: [MatDatepickerModule, HttpClient,MessageService],
+  providers: [MatDatepickerModule, HttpClient,MessageService,ConfirmationService],
   bootstrap: [AppComponent],
   entryComponents: [
     RequestDialogComponent
