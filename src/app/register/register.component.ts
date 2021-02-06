@@ -1,18 +1,20 @@
+import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 import { DisplayAppointments } from './../entitites/DisplayAppointment';
 import { UserEmail } from './../entitites/UserEmail';
 import { UserService } from './../services/user.service';
 import { AppointmentService } from './../services/appointment.service';
 import { Appointment } from './../entitites/Appointment';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
-import { ConfirmationService } from 'primeng/api';
+
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit ,OnDestroy{
 
   numberOfAppointments: number;
   appointments: Appointment[];
@@ -21,26 +23,35 @@ export class RegisterComponent implements OnInit {
   displayNextAppointments: DisplayAppointments[];
   todayDate: any;
   doctorUid: string;
+  private subscription1 : Subscription;
+  private subscription2 : Subscription;
+  private subscription3 :Subscription;
+  private subscription4 :Subscription;
 
-  constructor(private appointmentService: AppointmentService, private userService: UserService, private confirmationService: ConfirmationService) { }
+  constructor(private appointmentService: AppointmentService, private userService: UserService,private router: Router) {}
 
   ngOnInit(): void {
+
 
     this.doctorUid=sessionStorage.getItem('uid');
     this.patients = [];
     this.appointments=[];
     this.displayAppointments=[];
     this.displayNextAppointments = [];
+    console.log(this.displayAppointments);
     this.setDate();
     this.getAppointments();
+    console.log(this.displayAppointments);
     this.getNextAppointments();
 
   }
-
-  ionViewWillEnter(){
-    this.ngOnInit();
+  ngOnDestroy()
+  {
+    this.subscription2.unsubscribe();
+    this.subscription1.unsubscribe();
+    this.subscription3.unsubscribe();
+    this.subscription4.unsubscribe();
   }
-
 
   public markAsDone(id: string): void {
 
@@ -51,21 +62,6 @@ export class RegisterComponent implements OnInit {
     this.patients = [];
     sessionStorage.removeItem('numberOfAppointments');
   }
-
-  confirm(id:string): void {
-    this.confirmationService.confirm({
-        message: 'Are you sure that you want to delete it?',
-
-        accept: () => {
-          this.appointmentService.deleteAppointment(id);
-          this.displayNextAppointments = [];
-          this.displayAppointments = [];
-          this.appointments = [];
-          this.patients = [];
-          sessionStorage.removeItem('numberOfAppointments');
-        }
-    });
-}
 
   public setDate(): void {
 
@@ -79,14 +75,16 @@ export class RegisterComponent implements OnInit {
     this.displayAppointments=[];
     this.appointments = [];
     this.patients = [];
-      this.appointmentService.getAppointmentsByDoctor(this.doctorUid).subscribe(appointments =>
+
+      this.subscription1=this.appointmentService.getAppointmentsByDoctor(this.doctorUid).subscribe(appointments =>
          {
 
           this.appointments = appointments;
+          console.log(this.appointments);
           this.numberOfAppointments= appointments.length;
 
-          appointments.forEach(i => {
-          this.userService.getPatientById(i.patientId).subscribe(patient => {
+          this.appointments.forEach(i => {
+          this.subscription3=this.userService.getPatientById(i.patientId).subscribe(patient => {
             this.patients.push(patient[0]);
 
             const display = {
@@ -108,13 +106,14 @@ export class RegisterComponent implements OnInit {
     this.displayNextAppointments=[];
     this.appointments = [];
     this.patients = [];
-      this.appointmentService.getAppointments().subscribe(appointments =>
+
+      this.subscription2=this.appointmentService.getAppointments().subscribe(appointments =>
          {
 
           this.appointments = appointments;
 
           appointments.forEach(i => {
-          this.userService.getPatientById(i.patientId).subscribe(patient => {
+          this.subscription4=this.userService.getPatientById(i.patientId).subscribe(patient => {
             this.patients.push(patient[0]);
             let month = this.todayDate.split("/")[1].padStart(2, "0");
             let month2 = i.date.split("/")[1].padStart(2, "0");

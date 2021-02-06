@@ -6,16 +6,17 @@ import { Appointment } from './../entitites/Appointment';
 import { DoctorEmail } from './../entitites/DoctorEmail';
 import { UserService } from './../services/user.service';
 import { RequestDialogComponent } from './../request-dialog/request-dialog.component';
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {map} from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-notifications',
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.css']
 })
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit,OnDestroy {
 
   patients: any;
   sendMessage: boolean = false;
@@ -32,6 +33,10 @@ export class NotificationsComponent implements OnInit {
   uid: string;
   onMessage:boolean;
   onAppointment:boolean;
+  noPatient:boolean;
+  subscription1 : Subscription;
+  subscription2 : Subscription;
+  subscription3 : Subscription;
 
 
 
@@ -43,12 +48,13 @@ export class NotificationsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.subscription3 = new Subscription();
     this.onAppointment=false;
     this.onMessage=false;
     this.uid = sessionStorage.getItem('uid');
 
-    this.appointmentService.getAppointmentsByDoctor(this.uid).subscribe(appointments =>this.numberOfAppointments = appointments.length);
-    this.userService.getPatients().pipe(
+    this.subscription1=this.appointmentService.getAppointmentsByDoctor(this.uid).subscribe(appointments =>this.numberOfAppointments = appointments.length);
+    this.subscription2=this.userService.getPatients().pipe(
       map(v =>
        v.filter(user => user.doctorId === this.uid)
       )
@@ -70,8 +76,11 @@ export class NotificationsComponent implements OnInit {
       });
   }
 
-  ionViewWillEnter(){
-    this.ngOnInit();
+  ngOnDestroy()
+  {
+    this.subscription2.unsubscribe();
+    this.subscription1.unsubscribe();
+    this.subscription3.unsubscribe();
   }
 
   public onClickSendMessage(): void {
@@ -147,6 +156,7 @@ export class NotificationsComponent implements OnInit {
 
   navigate(event, id) {
 
+    this.ngOnDestroy();
     this.router.navigate(['/patients', id]);
   }
 
@@ -165,7 +175,7 @@ export class NotificationsComponent implements OnInit {
     const regex = new RegExp("^" + fullname + ".*");
 
     if (fullname !== '' && fullname != null) {
-    this.userService.getPatients().pipe(
+    this.subscription3=this.userService.getPatients().pipe(
       map(v =>
         v.filter(user => (user.lastname + user.firstname).toUpperCase() === fullname || (user.firstname + user.lastname).toUpperCase() === fullname || user.lastname.toUpperCase() === fullname || user.firstname.toUpperCase() === fullname || regex.test(user.lastname.toUpperCase()) || regex.test(user.firstname.toUpperCase()) || regex.test((user.lastname + user.firstname).toUpperCase()) || regex.test((user.firstname + user.lastname).toUpperCase()))
       )

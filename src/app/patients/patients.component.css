@@ -9,4 +9,14 @@
   margin: 50px auto 0;
   align-self: center;
   }
-
+  .jumbotron
+  {
+    border: none;
+    border-radius: 2rem;
+    border-color: lightseagreen;
+    transition: all 0.2s;
+    box-shadow: 0 0.5rem 1rem 0 rgba(29, 145, 160, 30);
+    width: 60%;
+    align-self: center;
+    align-content: center;
+  }

@@ -1,3 +1,4 @@
+import { Message } from './entitites/Message';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -40,9 +41,9 @@ import {ChartModule} from 'primeng/chart';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DoctorsComponent } from './admin/components/doctors/doctors.component';
-import {ButtonModule} from 'primeng/button';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {ConfirmationService} from 'primeng/api';
+import { TodayComponent } from './register/today/today/today.component';
+import { ThisMonthComponent } from './register/thisMonth/this-month/this-month.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +61,8 @@ import {ConfirmationService} from 'primeng/api';
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ErrorMessageComponent,
+    TodayComponent,
+    ThisMonthComponent,
 
   ],
   imports: [
@@ -86,11 +89,9 @@ import {ConfirmationService} from 'primeng/api';
     MatTableModule,
     HttpClientModule,
     ChartModule,
-    ToastModule,
-    ButtonModule,
-    ConfirmDialogModule
+    ToastModule
    ],
-  providers: [MatDatepickerModule, HttpClient,MessageService,ConfirmationService],
+  providers: [MatDatepickerModule, HttpClient,MessageService],
   bootstrap: [AppComponent],
   entryComponents: [
     RequestDialogComponent

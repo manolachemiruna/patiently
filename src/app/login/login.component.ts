@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
   errorMessage;
 
   constructor(private auth: AuthService, private userService: UserService,
-              private router: Router, private route: ActivatedRoute) { }
+              private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
 

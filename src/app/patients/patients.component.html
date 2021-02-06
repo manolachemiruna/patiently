@@ -1,7 +1,7 @@
 <app-menu [numberOfAppointments]="numberOfAppointments"></app-menu>
 
 
-  <div class="card gradient-card">
+  <div class="card gradient-card" *ngIf="!noData">
     <div class="card-image">
       <a>
         <div class="text-black d-flex h-100 mask blue-gradient-rgba">
@@ -13,9 +13,20 @@
     </div>
 
     <!-- Content -->
-    <div class="card-body">
+    <div class="card-body" >
       <p-toast class="mb-2"></p-toast>
       <p-chart type="line" [data]="chartData" (onDataSelect)="selectData($event)"></p-chart>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-md-push-3 ml-5 mr-5 mt-5 jumbotron text-center" *ngIf="noData">
+    <h1>No data found for this patient!</h1>
+    <p class="lead">This patient has no data to create an EKG.</p>
+    <hr class="my-4">
+    <p>Press Go back button to go see another patient, or contact this one for an appointment.</p>
+    <div class="col-md-6 col-md-push-3">
+      <button class="btn btn-danger btn-lg"  (click)="goBack()" type="button">Go back</button>
+      <button class=" ml-2 btn btn-info btn-lg"  (click)="openNewRequestDialog(appointment)" type="button">Set Appointment</button>
     </div>
   </div>
 

@@ -1,0 +1,20 @@
+  .card
+  {
+  border: none;
+  border-radius: 3rem;
+  border-color: lightseagreen;
+  transition: all 0.2s;
+  box-shadow: 0 0.5rem 1rem 0 rgba(29, 145, 160, 30);
+  padding: 10px;
+  margin: 2rem 0;
+  }
+
+  label{
+    color: black;
+  }
+
+  .outer
+  {
+    margin-left: 150px;
+
+  }

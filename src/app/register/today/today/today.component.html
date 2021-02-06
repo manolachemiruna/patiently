@@ -1,0 +1,34 @@
+<div class="outer" *ngFor="let p of displayAppointments,let i=index">
+  <div class="col-sm-6 left-style" *ngIf="i%2 == 0">
+    <div class="card card w-75">
+      <div class="card-body">
+        <h5 class="card-title">{{p.patientName}}</h5>
+        <div class= "row">
+          <p class="col-sm-6">{{'Date: '+p.date}}</p>
+          <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
+        </div>
+        <div class= "row">
+          <p class="col-sm-6">{{'Type: '+p.type}}</p>
+          <a href="{{p.link}}" *ngIf="videoType(p.type)" class="col-sm-6">{{'Join meeting'}}</a>
+        </div>
+        <button (click)="markAsDone(p.id)" mat-flat-button color="warn">Mark as Done</button>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6 right-style" *ngIf="i%2 != 0">
+    <div class="card card w-75">
+      <div class="card-body">
+        <h5 class="card-title">{{p.patientName}}</h5>
+          <div class= "row">
+            <p class="col-sm-6">{{'Date: '+p.date}}</p>
+            <p class="col-sm-6">{{'Hour: '+p.hour}}</p>
+          </div>
+          <div class= "row">
+            <p class="col-sm-6">{{'Type: '+p.type}}</p>
+            <a href="{{p.link}}" *ngIf="videoType(p.type)" class="col-sm-6">{{'Join meeting'}}</a>
+          </div>
+          <button (click)="markAsDone(p.id)" mat-flat-button color="warn">Mark as Done</button>
+      </div>
+    </div>
+  </div>
+</div>

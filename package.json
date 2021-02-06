@@ -38,6 +38,7 @@
     "google-auth-library": "^6.1.1",
     "jw-angular-pagination": "^1.2.0",
     "mdbootstrap": "^4.19.1",
+    "primeicons": "^4.1.0",
     "primeng": "^10.0.3",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
