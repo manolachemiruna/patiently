@@ -35,27 +35,10 @@ export class AuthService {
   }
 
 
-  public login( email: string, password: string) {
 
-    this.afAuth.signInWithEmailAndPassword(email, password)
-      .catch(error => {
-        if (error.code === 'auth/invalid-email') {
-          localStorage.setItem('message','Please enter a valid email address!');
-      } else if (error.code === 'auth/user-not-found') {
-         localStorage.setItem('message','There is no user coresponding to this identifier!');
-      } else if (error.code === 'auth/wrong-password') {
-          localStorage.setItem('message','The password is invalid or the user does not have a password!');
-      }
-      })
-      .then(userCredential => {
-        if (userCredential) {
-          sessionStorage.setItem('user', email);
-          sessionStorage.setItem('uid',userCredential.user.uid);
-          localStorage.removeItem('message');
-          if (this.isAdmin()) { this.router.navigate(['/admin']); } else { this.router.navigate(['/appointments']); }
-        }
-      });
+  public login( email: string, password: string){
 
+    return this.afAuth.signInWithEmailAndPassword(email, password);
   }
 
   public createPatient(user: User): void{

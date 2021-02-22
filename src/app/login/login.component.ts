@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   userPasswordError: string;
   errorMessage;
 
+
   constructor(private auth: AuthService, private userService: UserService,
               private router: Router, private route: ActivatedRoute) {}
 
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
     this.forgotPassword = false;
 
   }
+
 
   public onClick(): void {
     this.router.navigate(['/forgotPassword']);
@@ -51,7 +53,24 @@ export class LoginComponent implements OnInit {
     this.user = new User();
     this.user.email = this.email;
     this.user.password = this.password;
-    this.auth.login(this.user.email, this.user.password);
+    this.auth.login(this.user.email, this.user.password)
+    .catch(error => {
+      if (error.code === 'auth/invalid-email') {
+        this.errorMessage='Please enter a valid email address!';
+    } else if (error.code === 'auth/user-not-found') {
+       this.errorMessage='There is no user coresponding to this identifier!';
+    } else if (error.code === 'auth/wrong-password') {
+        this.errorMessage='The password is invalid or the user does not have a password!';
+    }
+    })
+    .then(userCredential => {
+      if (userCredential) {
+        sessionStorage.setItem('user', this.user.email);
+        sessionStorage.setItem('uid',userCredential.user.uid);
+        if (this.auth.isAdmin()) { this.router.navigate(['/admin']); } else { this.router.navigate(['/appointments']); }
+      }
+    });
+
 
   }
 
