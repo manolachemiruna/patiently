@@ -24,7 +24,7 @@ export class NotificationsComponent implements OnInit,OnDestroy {
   selectedId: number = 1;
   appointment: Appointment;
   doctor: DoctorEmail;
-  patientsOnCurrentPage = new Array<UserEmail>();
+  patientsOnCurrentPage:Array<UserEmail>;
   curentPage = 1;
   currentIndex = 0;
   search: string;
@@ -53,6 +53,8 @@ export class NotificationsComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void {
 
+    this.patients = [];
+    this.patientsOnCurrentPage = new Array<UserEmail>();
     this.subscription3 = new Subscription();
     this.patients = [];
     this.patientsOnCurrentPage = [];
@@ -64,22 +66,19 @@ export class NotificationsComponent implements OnInit,OnDestroy {
 
     this.subscription2=this.userService.getPatientByDoctorId(this.uid).subscribe(patient => {
         this.patients = patient;
-        console.log(this.patients);
         this.patientsOnCurrentPage = [];
         // tslint:disable-next-line: prefer-for-of
-        this.patientsOnCurrentPage.push(this.patients[this.curentPage - 1]);
+        if(this.patients !== [])this.patientsOnCurrentPage.push(this.patients[this.curentPage - 1]);
 
         for (let i = 0; i < this.patients.length - 1 && i < 3; i++) {
           this.patientsOnCurrentPage.push(this.patients[this.curentPage + i]);
         }
-        console.log(this.patientsOnCurrentPage);
-        console.log(this.patients.length);
 
         if (this.patients.length === this.patientsOnCurrentPage.length) {
           const element = document.getElementById("previous") as HTMLInputElement;
-          element.disabled = true;
+          if(element !== null)element.disabled = true;
           const element2 = document.getElementById("next") as HTMLInputElement;
-          element2.disabled = true;
+          if(element2 !== null) element2.disabled = true;
         }
       });
   }
@@ -187,7 +186,7 @@ export class NotificationsComponent implements OnInit,OnDestroy {
     const regex = new RegExp("^" + fullname + ".*");
 
     if (fullname !== '' && fullname != null) {
-    this.subscription3=this.userService.getPatients().pipe(
+    this.subscription3=this.userService.getPatientByDoctorId(this.uid).pipe(
       map(v =>
         v.filter(user => (user.lastname + user.firstname).toUpperCase() === fullname || (user.firstname + user.lastname).toUpperCase() === fullname || user.lastname.toUpperCase() === fullname || user.firstname.toUpperCase() === fullname || regex.test(user.lastname.toUpperCase()) || regex.test(user.firstname.toUpperCase()) || regex.test((user.lastname + user.firstname).toUpperCase()) || regex.test((user.firstname + user.lastname).toUpperCase()))
       )

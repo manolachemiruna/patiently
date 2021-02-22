@@ -76,6 +76,7 @@ export class AuthService {
     this.afAuth.createUserWithEmailAndPassword(doctor.email, doctor.password)
       .then( userCredential => {
         this.newDoctor = doctor;
+        userCredential.user.updateProfile({displayName: 'doctor',  photoURL: ''});
         console.log(userCredential);
         this.insertUserData(userCredential);
         sessionStorage.setItem('message', 'Doctor successfully  created!');

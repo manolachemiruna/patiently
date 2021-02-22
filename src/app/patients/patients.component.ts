@@ -87,7 +87,6 @@ export class PatientsComponent implements OnInit {
   public getEkgData(): void
   {
         this.subscription3=this.ekg.getDataByPatientId(this.id).subscribe(data =>{
-        console.log(data);
         if(data.length>=2){
 
           this.data1=data[0].data;

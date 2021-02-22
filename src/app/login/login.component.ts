@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { User } from '../entitites/User';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -65,9 +66,11 @@ export class LoginComponent implements OnInit {
     })
     .then(userCredential => {
       if (userCredential) {
+        console.log(userCredential)
         sessionStorage.setItem('user', this.user.email);
         sessionStorage.setItem('uid',userCredential.user.uid);
-        if (this.auth.isAdmin()) { this.router.navigate(['/admin']); } else { this.router.navigate(['/appointments']); }
+        if (this.auth.isAdmin()) { this.router.navigate(['/admin']); } else if(userCredential.user.displayName === 'doctor') { this.router.navigate(['/appointments']); }
+        else this.errorMessage='You are not allowed to use this application!';
       }
     });
 
