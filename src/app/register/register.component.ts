@@ -7,6 +7,7 @@ import { AppointmentService } from './../services/appointment.service';
 import { Appointment } from './../entitites/Appointment';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import { app } from 'firebase';
 
 
 @Component({
@@ -19,8 +20,8 @@ export class RegisterComponent implements OnInit ,OnDestroy{
   numberOfAppointments: number;
   appointments: Appointment[];
   patients: UserEmail[];
-  displayAppointments: DisplayAppointments[];
-  displayNextAppointments: DisplayAppointments[];
+  displayAppointments: Appointment[];
+  displayNextAppointments: Appointment[];
   todayDate: any;
   doctorUid: string;
   private subscription1 : Subscription;
@@ -33,15 +34,15 @@ export class RegisterComponent implements OnInit ,OnDestroy{
   ngOnInit(): void {
 
 
+    this.subscription3 = new Subscription();
+    this.subscription4 = new Subscription();
     this.doctorUid=sessionStorage.getItem('uid');
     this.patients = [];
     this.appointments=[];
     this.displayAppointments=[];
     this.displayNextAppointments = [];
-    console.log(this.displayAppointments);
     this.setDate();
     this.getAppointments();
-    console.log(this.displayAppointments);
     this.getNextAppointments();
 
   }
@@ -51,6 +52,8 @@ export class RegisterComponent implements OnInit ,OnDestroy{
     this.subscription1.unsubscribe();
     this.subscription3.unsubscribe();
     this.subscription4.unsubscribe();
+    this.displayAppointments=[];
+    this.displayNextAppointments = [];
   }
 
   public markAsDone(id: string): void {
@@ -80,24 +83,9 @@ export class RegisterComponent implements OnInit ,OnDestroy{
          {
 
           this.appointments = appointments;
-          console.log(this.appointments);
+          this.displayAppointments = appointments;
           this.numberOfAppointments= appointments.length;
-
-          this.appointments.forEach(i => {
-          this.subscription3=this.userService.getPatientById(i.patientId).subscribe(patient => {
-            this.patients.push(patient[0]);
-
-            const display = {
-              hour: i.hour,
-              date: i.date,
-              id: i.id,
-              type: i.type,
-              link: i.link,
-              patientName : patient[0].lastname + " " + patient[0].firstname,
-            };
-            this.displayAppointments.push(display);
-        })});
-      })
+        })
 
   }
 
@@ -107,28 +95,12 @@ export class RegisterComponent implements OnInit ,OnDestroy{
     this.appointments = [];
     this.patients = [];
 
-      this.subscription2=this.appointmentService.getAppointments().subscribe(appointments =>
+      this.subscription2=this.appointmentService.getNextAppointmentsByDoctor(this.doctorUid).subscribe(appointments =>
          {
 
           this.appointments = appointments;
-
-          appointments.forEach(i => {
-          this.subscription4=this.userService.getPatientById(i.patientId).subscribe(patient => {
-            this.patients.push(patient[0]);
-            let month = this.todayDate.split("/")[1].padStart(2, "0");
-            let month2 = i.date.split("/")[1].padStart(2, "0");
-
-            const display = {
-              hour: i.hour,
-              date: i.date,
-              id: i.id,
-              type: i.type,
-              link: i.link,
-              patientName : patient[0].lastname + " " + patient[0].firstname,
-            };
-            if(month===month2 && this.todayDate !== i.date)this.displayNextAppointments.push(display);
-        })});
-      })
+          this.displayNextAppointments = appointments;
+        });
   }
 
   public videoType(type: string): boolean {

@@ -44,28 +44,36 @@ export class NotificationsComponent implements OnInit,OnDestroy {
               private userService: UserService,
               private messageService: MessagesService,
               private appointmentService: AppointmentService,
-              private router: Router) { }
+              private router: Router) {
+    this.router.routeReuseStrategy.shouldReuseRoute = function() {
+      return false;};
+      this.patients = [];
+      this.patientsOnCurrentPage = [];
+               }
 
   ngOnInit(): void {
 
     this.subscription3 = new Subscription();
+    this.patients = [];
+    this.patientsOnCurrentPage = [];
     this.onAppointment=false;
     this.onMessage=false;
     this.uid = sessionStorage.getItem('uid');
 
     this.subscription1=this.appointmentService.getAppointmentsByDoctor(this.uid).subscribe(appointments =>this.numberOfAppointments = appointments.length);
-    this.subscription2=this.userService.getPatients().pipe(
-      map(v =>
-       v.filter(user => user.doctorId === this.uid)
-      )
-    ).subscribe(patient => {
+
+    this.subscription2=this.userService.getPatientByDoctorId(this.uid).subscribe(patient => {
         this.patients = patient;
+        console.log(this.patients);
+        this.patientsOnCurrentPage = [];
         // tslint:disable-next-line: prefer-for-of
         this.patientsOnCurrentPage.push(this.patients[this.curentPage - 1]);
 
         for (let i = 0; i < this.patients.length - 1 && i < 3; i++) {
           this.patientsOnCurrentPage.push(this.patients[this.curentPage + i]);
         }
+        console.log(this.patientsOnCurrentPage);
+        console.log(this.patients.length);
 
         if (this.patients.length === this.patientsOnCurrentPage.length) {
           const element = document.getElementById("previous") as HTMLInputElement;
@@ -81,6 +89,8 @@ export class NotificationsComponent implements OnInit,OnDestroy {
     this.subscription2.unsubscribe();
     this.subscription1.unsubscribe();
     this.subscription3.unsubscribe();
+    this.patients = [];
+    this.patientsOnCurrentPage = [];
   }
 
   public onClickSendMessage(): void {
@@ -101,11 +111,13 @@ export class NotificationsComponent implements OnInit,OnDestroy {
      this.onAppointment=true;
      const doctorId = this.uid;
      const patientId = patient.id;
+     const patientName = patient.lastname + ' ' + patient.firstname;
      this.dialog.open(RequestDialogComponent, {
         data: {
             appointment,
             doctorId,
-            patientId
+            patientId,
+            patientName,
         }
     });
 }

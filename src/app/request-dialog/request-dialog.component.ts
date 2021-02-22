@@ -18,6 +18,7 @@ export class RequestDialogComponent implements OnInit {
   doctorId: string;
   appointments: any;
   message: string;
+  patientName: string;
   type: string;
   link: string;
   todayDate:Date = new Date();
@@ -33,6 +34,7 @@ export class RequestDialogComponent implements OnInit {
     this.message = null;
     this.patientId = this.data.patientId;
     this.doctorId = this.data.doctorId;
+    this.patientName = this.data.patientName;
     this.type=null;
     this.link=null;
 
@@ -49,6 +51,7 @@ export class RequestDialogComponent implements OnInit {
     appointment.doctorId = this.doctorId;
     appointment.link = this.link;
     appointment.type = this.type;
+    appointment.patientName=this.patientName;
     this.appointmentService.addAppointment(appointment);
     this.dialogRef.close();
     this.type=null;

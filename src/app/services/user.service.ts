@@ -78,6 +78,14 @@ export class UserService {
     );
   }
 
+  public getPatientByDoctorId(id: string): Observable<UserEmail[]> {
+
+    return this.getPatients().pipe(
+      map(p => p.filter(patient => patient.doctorId === id))
+    );
+  }
+
+
   public getDoctorByEmail(email: string): Observable<DoctorEmail[]> {
 
     return this.getDoctors().pipe(

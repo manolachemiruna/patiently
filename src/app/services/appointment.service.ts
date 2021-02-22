@@ -1,3 +1,4 @@
+import { DisplayAppointments } from './../entitites/DisplayAppointment';
 import { DoctorEmail } from './../entitites/DoctorEmail';
 import { Appointment } from './../entitites/Appointment';
 import { Observable } from 'rxjs';
@@ -52,6 +53,7 @@ export class AppointmentService {
       date: appointment.date,
       hour: appointment.hour,
       patientId: appointment.patientId,
+      patientName: appointment.patientName,
       doctorId: appointment.doctorId,
       type: appointment.type,
       link: appointment.link,
@@ -68,6 +70,13 @@ export class AppointmentService {
   {
     return this.getAppointments().pipe(
       map(p => p.filter(appointment => appointment.doctorId === uid && appointment.date === this.todayDate ))
+    );
+  }
+
+  public getNextAppointmentsByDoctor(uid: string)
+  {
+    return this.getAppointments().pipe(
+      map(p => p.filter(appointment => appointment.doctorId === uid && appointment.date !== this.todayDate ))
     );
   }
 
