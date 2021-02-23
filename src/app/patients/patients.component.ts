@@ -37,6 +37,7 @@ export class PatientsComponent implements OnInit {
   constructor(private route: ActivatedRoute,private userService: UserService,
      private messageService :MessageService, private appointmentService: AppointmentService, private ekg: EkgService,
      private router: Router,private dialog: MatDialog,) {
+       this.labels = [];
    }
 
   ngOnInit(): void {
@@ -72,6 +73,8 @@ export class PatientsComponent implements OnInit {
     this.patient.lastname='';
   }
 
+    this.data1 = [];
+    this.data2 = [];
     this.getEkgData();
 
   }
@@ -82,10 +85,12 @@ export class PatientsComponent implements OnInit {
     this.subscription2.unsubscribe();
     this.subscription1.unsubscribe();
     this.subscription3.unsubscribe();
+    this.labels = [];
   }
 
   public getEkgData(): void
   {
+        this.labels = [];
         this.subscription3=this.ekg.getDataByPatientId(this.id).subscribe(data =>{
         if(data.length>=2){
 
@@ -105,8 +110,12 @@ export class PatientsComponent implements OnInit {
 
       if(this.noData === false)
       {
+
         let maxi= Math.max(this.data1.length, this.data2.length);
+        for(let i=0;i<maxi;i++)this.labels.pop();
         for(let i=0;i<maxi;i++)this.labels.push('');
+
+        console.log(this.labels.length);
         this.chartData= {
           labels: this.labels,
           datasets: [
@@ -131,22 +140,26 @@ export class PatientsComponent implements OnInit {
 
   public selectData(event) {
 
-    this.messageService.add({severity: 'info', summary: 'Data Selected', 'detail': this.chartData.datasets[event.element._datasetIndex].data[event.element._index]});
+    this.messageService.add({sticky : true, summary: 'Data Selected', 'detail': this.chartData.datasets[event.element._datasetIndex].data[event.element._index]});
 }
 
   goBack()
   {
+    this.labels = [];
+    this.ngOnDestroy();
     this.router.navigate(['/notifications']);
   }
 
   openNewRequestDialog(appointment): void {
     const doctorId = sessionStorage.getItem('uid');
     const patientId = this.id;
+    const patientName = this.patient.lastname + ' ' + this.patient.firstname;
     this.dialog.open(RequestDialogComponent, {
        data: {
            appointment,
            doctorId,
-           patientId
+           patientId,
+           patientName
        }
    });
 }
