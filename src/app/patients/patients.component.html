@@ -1,7 +1,7 @@
 <app-menu [numberOfAppointments]="numberOfAppointments"></app-menu>
 
-
-  <div class="card gradient-card" *ngIf="!noData">
+ <div [ngSwitch]="noData">
+  <div class="card gradient-card" *ngSwitchCase=false>
     <div class="card-image">
       <a>
         <div class="text-black d-flex h-100 mask blue-gradient-rgba">
@@ -14,18 +14,43 @@
 
     <!-- Content -->
     <div class="card-body" >
-      <p-chart type="line" [data]="chartData" (onDataSelect)="selectData($event)"></p-chart>
+      <apx-chart
+        [series]="series"
+        [chart]="chart"
+        [dataLabels]="dataLabels"
+        [markers]="markers"
+        [title]="title"
+        [fill]="fill"
+        [yaxis]="yaxis"
+        [xaxis]="xaxis"
+        [tooltip]="tooltip"
+        [autoUpdateSeries]="true"
+      ></apx-chart>
+      <!--<p-chart type="line" [data]="chartData" (onDataSelect)="selectData($event)" ></p-chart> -->
     </div>
   </div>
 
-  <div class="col-md-6 col-md-push-3 ml-5 mr-5 mt-5 jumbotron text-center" *ngIf="noData">
-    <h1>No data found for this patient!</h1>
-    <p class="lead">This patient has no data to create an EKG.</p>
-    <hr class="my-4">
-    <p>Press Go back button to go see another patient, or contact this one for an appointment.</p>
-    <div class="col-md-6 col-md-push-3">
-      <button class="btn btn-danger btn-lg"  (click)="goBack()" type="button">Go back</button>
-      <button class=" ml-2 btn btn-info btn-lg"  (click)="openNewRequestDialog(appointment)" type="button">Set Appointment</button>
+  <div class="col-md-6 col-md-push-3 ml-5 mr-5 mt-5 jumbotron text-center" *ngSwitchCase=true>
+
+    <div [ngSwitch]="progressSpinner">
+
+      <div *ngSwitchCase=false>
+        <h1>No data found for this patient!</h1>
+        <p class="lead">This patient has no data to create an EKG.</p>
+        <hr class="my-4">
+        <p>Press Go back button to go see another patient, or contact this one for an appointment.</p>
+        <div class="col-md-6 col-md-push-3">
+          <button class="btn btn-danger btn-lg"  (click)="goBack()" type="button">Go back</button>
+          <button class=" ml-2 btn btn-info btn-lg"  (click)="openNewRequestDialog(appointment)" type="button">Set Appointment</button>
+        </div>
+      </div>
+
+      <div *ngSwitchCase=true>
+        <h1>Waiting for data!</h1>
+        <p-progressSpinner [style]="{width: '200px', height: '200px'}" styleClass="custom-spinner"></p-progressSpinner>
+      </div>
+
+
     </div>
   </div>
 

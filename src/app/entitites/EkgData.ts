@@ -1,6 +1,6 @@
 export class EkgData
 {
   patientId: string;
-  data: Array<number>;
+  data: Array<any>;
   date: string;
 }

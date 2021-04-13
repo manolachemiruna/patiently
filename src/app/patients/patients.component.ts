@@ -9,6 +9,17 @@ import { MatDialog } from '@angular/material/dialog';
 import { RequestDialogComponent } from '../request-dialog/request-dialog.component';
 import { Appointment } from '../entitites/Appointment';
 import { Subscription } from 'rxjs';
+import {
+  ApexAxisChartSeries,
+  ApexChart,
+  ApexTitleSubtitle,
+  ApexDataLabels,
+  ApexFill,
+  ApexMarkers,
+  ApexYAxis,
+  ApexXAxis,
+  ApexTooltip
+} from "ng-apexcharts";
 /* tslint:disable */
 
 @Component({
@@ -24,8 +35,7 @@ export class PatientsComponent implements OnInit {
   message: string;
   chartData:any;
   labels=[];
-  data1: Array<number>;
-  data2: Array<number>;
+  data1: any;
   numberOfAppointments: number;
   noData: boolean;
   appointment: Appointment;
@@ -33,18 +43,33 @@ export class PatientsComponent implements OnInit {
   subscription2 : Subscription;
   subscription3 : Subscription;
 
+  public series: ApexAxisChartSeries;
+  public chart: ApexChart;
+  public dataLabels: ApexDataLabels;
+  public markers: ApexMarkers;
+  public title: ApexTitleSubtitle;
+  public fill: ApexFill;
+  public yaxis: ApexYAxis;
+  public xaxis: ApexXAxis;
+  public tooltip: ApexTooltip;
+
+  public progressSpinner:boolean;
+
 
   constructor(private route: ActivatedRoute,private userService: UserService,
      private messageService :MessageService, private appointmentService: AppointmentService, private ekg: EkgService,
      private router: Router,private dialog: MatDialog,) {
+
        this.labels = [];
    }
 
   ngOnInit(): void {
 
+    this.progressSpinner=true;
     this.subscription2 = new Subscription();
     this.noData=true;
     this.labels = [];
+    this.data1=[];
     let uid = sessionStorage.getItem('uid');
     this.subscription1=this.appointmentService.getAppointmentsByDoctor(uid).subscribe(appointments => this.numberOfAppointments = appointments.length);
 
@@ -74,7 +99,6 @@ export class PatientsComponent implements OnInit {
   }
 
     this.data1 = [];
-    this.data2 = [];
     this.getEkgData();
 
   }
@@ -90,58 +114,92 @@ export class PatientsComponent implements OnInit {
 
   public getEkgData(): void
   {
+
         this.labels = [];
+        let ts2 = 0;
         this.subscription3=this.ekg.getDataByPatientId(this.id).subscribe(data =>{
-        if(data.length>=2){
 
-          this.data1=data[0].data;
-          this.data2 = data[1].data;
+
+          this.progressSpinner=false;
+          for( let i=0;i<data[0].data.length;i++)
+          {
+            if(data[0].data[i] !=0)this.data1.push([ts2,data[0].data[i]]);
+            ts2 = ts2 + 0.03;
+          }
+          this.series = [
+            {
+              name: "Value",
+              data: this.data1
+            }
+          ];
+
+
+        if(data !== [] && data!==undefined){
           this.noData=false;
         }
-        else if(data.length==1)
-        {
-          this.data1=data[0].data;
-          this.data2=[];
-          this.noData=false;
-        }
-        else if(data === []){
-          this.noData=true;
-        }
 
-      if(this.noData === false)
-      {
 
-        let maxi= Math.max(this.data1.length, this.data2.length);
-        for(let i=0;i<maxi;i++)this.labels.pop();
-        for(let i=0;i<maxi;i++)this.labels.push('');
 
-        console.log(this.labels.length);
-        this.chartData= {
-          labels: this.labels,
-          datasets: [
-              {
-                  label: 'Now',
-                  data: this.data1,
-                  fill: false,
-                  borderColor: '#4bc0c0'
-              },
-              {
-                  label: 'Last time',
-                  data: this.data2,
-                  fill: false,
-                  borderColor: '#565656'
-              }
-          ]
-      }
-    }
+        this.chart = {
+          type: "area",
+          stacked: false,
+          height: 350,
+          zoom: {
+            type: "x",
+            enabled: true,
+            autoScaleYaxis: true
+          },
+          toolbar: {
+            autoSelected: "zoom"
+          }
+        };
+
+
+        this.dataLabels = {
+          enabled: false
+        };
+        this.markers = {
+          size: 0
+        };
+        this.title = {
+          text: "",
+          align: "left"
+        };
+        this.fill = {
+          type: "gradient",
+          gradient: {
+            shadeIntensity: 1,
+            inverseColors: false,
+            opacityFrom: 0.5,
+            opacityTo: 0,
+            stops: [0, 90, 100]
+          }
+        };
+        this.yaxis = {
+          labels: {
+            formatter: function(val) {
+              return (val).toFixed(0);
+            }
+          },
+          title: {
+            text: ""
+          }
+        };
+        this.xaxis = {
+          type: "numeric"
+        };
+        this.tooltip = {
+          shared: false,
+          y: {
+            formatter: function(val) {
+              return (val).toFixed(0);
+            }
+          }
+        };
+
       });
-
   }
 
-  public selectData(event) {
-
-    this.messageService.add({sticky : true, summary: 'Data Selected', 'detail': this.chartData.datasets[event.element._datasetIndex].data[event.element._index]});
-}
 
   goBack()
   {
@@ -163,7 +221,5 @@ export class PatientsComponent implements OnInit {
        }
    });
 }
-
-
 
 }

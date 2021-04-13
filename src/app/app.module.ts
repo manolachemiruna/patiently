@@ -43,7 +43,9 @@ import { MessageService } from 'primeng/api';
 import { DoctorsComponent } from './admin/components/doctors/doctors.component';
 import { TodayComponent } from './register/today/today/today.component';
 import { ThisMonthComponent } from './register/thisMonth/this-month/this-month.component';
-
+import {InputSwitchModule} from 'primeng/inputswitch';
+import { NgApexchartsModule } from "ng-apexcharts";
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,7 +91,10 @@ import { ThisMonthComponent } from './register/thisMonth/this-month/this-month.c
     MatTableModule,
     HttpClientModule,
     ChartModule,
-    ToastModule
+    ToastModule,
+    InputSwitchModule,
+    NgApexchartsModule,
+    ProgressSpinnerModule,
    ],
   providers: [MatDatepickerModule, HttpClient,MessageService],
   bootstrap: [AppComponent],
