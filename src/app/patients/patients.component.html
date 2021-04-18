@@ -1,7 +1,8 @@
 <app-menu [numberOfAppointments]="numberOfAppointments"></app-menu>
 
  <div [ngSwitch]="noData">
-  <div class="card gradient-card" *ngSwitchCase=false>
+  <div *ngSwitchCase=false>
+  <div class="card gradient-card">
     <div class="card-image">
       <a>
         <div class="text-black d-flex h-100 mask blue-gradient-rgba">
@@ -26,9 +27,30 @@
         [tooltip]="tooltip"
         [autoUpdateSeries]="true"
       ></apx-chart>
-      <!--<p-chart type="line" [data]="chartData" (onDataSelect)="selectData($event)" ></p-chart> -->
     </div>
   </div>
+  <div class="ml-5 row" >
+    <div class="col mt-5" style="text-align: center">
+      <p-dropdown [style]="{'border':'dotted','padding':'10px','width':'60%','font-size':'20px','text-align':'center',
+      'border-color': 'lightseagreen', 'border-radius': '2rem',  'box-shadow': '0 0.5rem 1rem 0 rgba(29, 145, 160, 190)'}"
+
+      [panelStyle]="{'padding':'10px','width':'60%','font-size':'20px','text-align':'center','background-color':'white'}"
+      class="ml-5" [options]="dates" [(ngModel)]="selectedDate" optionLabel="date" placeholder="Select a date"
+       [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" (onChange)="getEkgByDate()"></p-dropdown>
+    </div>
+    <div class="col mr-5">
+      <h2 class="mt-2 text">Leave a note here.</h2>
+      <textarea [rows]="10" [cols]="20" pInputTextarea autoResize="autoResize" [(ngModel)]="notes"></textarea>
+      <button class="btn btn-info btn-lg mt-3" style=" display: block;margin-left: auto;margin-right: auto;" (click)="insertNotes()">Save Notes</button>
+    </div>
+  </div>
+
+  <div *ngIf="message" class="alert alert-info" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <strong>{{message}}</strong>
+  </div>
+
+</div>
 
   <div class="col-md-6 col-md-push-3 ml-5 mr-5 mt-5 jumbotron text-center" *ngSwitchCase=true>
 
@@ -50,8 +72,5 @@
         <p-progressSpinner [style]="{width: '200px', height: '200px'}" styleClass="custom-spinner"></p-progressSpinner>
       </div>
 
-
     </div>
   </div>
-
-  <div *ngIf="message" class="alert alert-info" role="alert">{{message}}</div>

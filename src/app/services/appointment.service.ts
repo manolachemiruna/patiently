@@ -1,4 +1,3 @@
-import { DisplayAppointments } from './../entitites/DisplayAppointment';
 import { DoctorEmail } from './../entitites/DoctorEmail';
 import { Appointment } from './../entitites/Appointment';
 import { Observable } from 'rxjs';
@@ -17,6 +16,7 @@ export class AppointmentService {
   appointmentsDoc: AngularFirestoreDocument<Appointment>;
   todayDate: any;
   doctor: DoctorEmail;
+  currentMonth:number;
 
 
   constructor(private db: AngularFirestore) {
@@ -32,6 +32,7 @@ export class AppointmentService {
     })
     );
     this.todayDate = new Date();
+    this.currentMonth=this.todayDate.getMonth();
     const datePipe = new DatePipe("en-US");
     this.todayDate = datePipe.transform(this.todayDate, 'dd/MM/yyyy');
   }
@@ -76,7 +77,9 @@ export class AppointmentService {
   public getNextAppointmentsByDoctor(uid: string)
   {
     return this.getAppointments().pipe(
-      map(p => p.filter(appointment => appointment.doctorId === uid && appointment.date !== this.todayDate ))
+      map(p => p.filter(appointment =>
+          appointment.doctorId === uid && appointment.date !== this.todayDate && parseInt(appointment.date.substring(4)) === this.currentMonth +1
+        ))
     );
   }
 

@@ -39,4 +39,23 @@ export class EkgService {
       map(p => p.filter(ekg => ekg.patientId === id))
     );
   }
+
+  public insertNotes(id:string, notes:string)
+  {
+      var ref = this.db.collection("ekg").doc(id);
+      return ref.update({
+        notes: notes
+    });
+  }
+
+
+  public getDataByPatientIdAndDate(id: string, date:string) :Observable<EkgData[]>
+  {
+    return this.getAllData().pipe(
+      map(p => p.filter(ekg => ekg.patientId === id && ekg.date === date))
+    );
+  }
+
+
+
 }

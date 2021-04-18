@@ -46,6 +46,8 @@ import { ThisMonthComponent } from './register/thisMonth/this-month/this-month.c
 import {InputSwitchModule} from 'primeng/inputswitch';
 import { NgApexchartsModule } from "ng-apexcharts";
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {DropdownModule} from 'primeng/dropdown';
 @NgModule({
   declarations: [
     AppComponent,
@@ -95,6 +97,8 @@ import {ProgressSpinnerModule} from 'primeng/progressspinner';
     InputSwitchModule,
     NgApexchartsModule,
     ProgressSpinnerModule,
+    InputTextareaModule,
+    DropdownModule,
    ],
   providers: [MatDatepickerModule, HttpClient,MessageService],
   bootstrap: [AppComponent],
