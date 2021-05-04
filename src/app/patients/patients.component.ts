@@ -132,8 +132,12 @@ export class PatientsComponent implements OnInit {
 
           for( let i=0;i<data[data.length-1].data.length;i++)
           {
-            if(data[data.length-1].data[i] !=0)this.data1.push([ts2,data[data.length-1].data[i]]);
-            ts2 = ts2 + 0.03;
+            if(data[data.length-1].data[i] !=0)
+            {
+              this.data1.push([ts2,data[data.length-1].data[i]]);
+              ts2 = ts2 + 0.007;
+            }
+
           }
 
           this.series = [
@@ -191,8 +195,11 @@ export class PatientsComponent implements OnInit {
         this.notes=data[0].notes;
         for( let i=0;i<data[0].data.length;i++)
         {
-          if(data[0].data[i] !=0)this.data1.push([ts2,data[0].data[i]]);
-          ts2 = ts2 + 0.03;
+          if(data[0].data[i] !=0)
+          {
+            this.data1.push([ts2,data[0].data[i]]);
+            ts2 = ts2 + 0.007;
+          }
         }
         console.log(ts2);
         this.series = [

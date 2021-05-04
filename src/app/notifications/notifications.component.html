@@ -50,7 +50,6 @@
             <button class="ml-2 btn btn-success" (click)="send(p.id,message)">Send</button>
             <button class="ml-2 btn btn-dark" (click)="cancel()">Cancel</button>
           </div>
-          <button type="button" class="btn btn-dark" *ngIf="!sendMessage" (click)="onClickSendMessage()">Send message</button>
           <button type="button" class="btn btn-primary" *ngIf="!sendMessage" (click)="openNewRequestDialog(appointment,p)">Set appointment</button>
         </div>
 

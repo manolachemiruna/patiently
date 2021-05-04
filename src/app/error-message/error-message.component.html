@@ -1,1 +1,4 @@
-<div class="alert alert-danger" role="alert" *ngIf="message">{{message}}</div>
+<div *ngIf="message" class="alert alert-danger" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>{{message}}</strong>
+ </div>
