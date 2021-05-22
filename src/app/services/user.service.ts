@@ -5,6 +5,7 @@ import { Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import { UserEmail } from '../entitites/UserEmail';
 import { HttpClient } from '@angular/common/http';
+import firebase from 'firebase';
 @Injectable({
   providedIn: 'root'
 })

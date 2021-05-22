@@ -25,20 +25,20 @@
         <div class="col-md-12 mb-2">
           <mat-form-field>
             <mat-label>Enter email</mat-label>
-            <input matInput type="email" name="email" [(ngModel)]="email" required>
+            <input matInput type="email" name="email" [(ngModel)]="email" required (change)="verifyEmail(email)">
           </mat-form-field>
         </div>
         <div class="col-md-12 mb-2">
           <mat-form-field>
             <mat-label>Enter password</mat-label>
-            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" required>
+            <input matInput [type]="hide ? 'password' : 'text'" [(ngModel)]="password" required (change)="verifyPassword(password)">
             <button mat-icon-button matSuffix [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
             <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
           </mat-form-field>
         </div>
 
-          <button class="mat-raised-button" color="link" target="_blank" [disabled]="!email || !password || !firstname || !lastname" (click)="createDoctor(email,password)">Create Doctor</button>
+          <button class="mat-raised-button" color="link" [disabled]="!email || !password || !firstname || !lastname || passwordMessage || emailMessage" (click)="createDoctor(email,password)">Create Doctor</button>
         </div>
       </div>
     </td>
@@ -66,6 +66,16 @@
 <div *ngIf="message" class="alert alert-info" role="alert">
   <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
   <strong>{{message}}</strong>
+</div>
+
+<div *ngIf="emailMessage" class="alert alert-warning" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>{{emailMessage}}</strong>
+</div>
+
+<div *ngIf="passwordMessage" class="alert alert-warning" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  <strong>{{passwordMessage}}</strong>
 </div>
 
 

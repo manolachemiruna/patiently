@@ -17,6 +17,7 @@ export class AppointmentService {
   todayDate: any;
   doctor: DoctorEmail;
   currentMonth:number;
+  currentDay:number;
 
 
   constructor(private db: AngularFirestore) {
@@ -33,6 +34,8 @@ export class AppointmentService {
     );
     this.todayDate = new Date();
     this.currentMonth=this.todayDate.getMonth();
+    this.currentDay=this.todayDate.getDate();
+    console.log(this.currentMonth);
     const datePipe = new DatePipe("en-US");
     this.todayDate = datePipe.transform(this.todayDate, 'dd/MM/yyyy');
   }
@@ -74,6 +77,13 @@ export class AppointmentService {
     );
   }
 
+  public getAppointmentsById(id: string)
+  {
+    return this.getAppointments().pipe(
+      map(p => p.filter(appointment => appointment.id === id ))
+    );
+  }
+
   public getNextAppointmentsByDoctor(uid: string)
   {
     return this.getAppointments().pipe(
@@ -82,5 +92,16 @@ export class AppointmentService {
         ))
     );
   }
+
+  public getPastAppointmentsByDoctor(uid: string)
+  {
+    return this.getAppointments().pipe(
+      map(p => p.filter(appointment =>
+          appointment.doctorId === uid && appointment.date !== this.todayDate && parseInt(appointment.date.substring(4,5)) < this.currentMonth +1
+         || appointment.doctorId === uid && appointment.date !== this.todayDate && parseInt(appointment.date.substring(4,5)) === this.currentMonth+1 && parseInt(appointment.date.substring(0,2))<this.currentDay
+          ))
+    );
+  }
+
 
 }

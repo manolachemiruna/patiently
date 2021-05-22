@@ -13,15 +13,43 @@
         </li>
       </ul>
       <ul class="navbar-nav navbar-right">
+        <li *ngIf="!loggedIn" class="nav-item active"><a  class="nav-link" data-toggle="modal" data-target="#myModal"> <span class="glyphicon glyphicon-facetime-video"></span>Join a meeting<span class="sr-only">(current)</span></a></li>
         <li  *ngIf="admin" class="nav-item active"><a  class="nav-link"  routerLink="/admin"><span class="fa fa-user-circle fa-2x"></span>Administrator<span class="sr-only">(current)</span></a></li>
         <li *ngIf="!admin" class="nav-item active"><a  class="nav-link"  routerLink="/appointments"><span class="fas fa-user-md fa-2x"></span><span *ngIf="loggedIn" class="badge  badge-pill badge-danger">{{numberOfAppointments}}</span>Appointments<span class="sr-only">(current)</span></a></li>
         <li  *ngIf="!loggedIn" class="nav-item active"><a  class="nav-link"  routerLink="/login"> <span class="glyphicon glyphicon-log-in"></span> Login<span class="sr-only">(current)</span></a></li>
         <li *ngIf="loggedIn" class="nav-item active">
           <a class="nav-link" routerLink="/logout"><span class="glyphicon glyphicon-log-out glyphicon"></span>Logout</a>
         </li>
+
       </ul>
     </div>
 </nav>
 
 
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-sm-8 ">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div  *ngIf="modalError" class="alert alert-danger"><strong>{{modalError}}</strong></div>
+      </div>
+
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <mat-form-field>
+          <mat-label>Enter your meeting id</mat-label>
+          <input matInput type="text" name="meetingId" [(ngModel)]="meetingId" required>
+        </mat-form-field>
+        <div class="row ml-5 mr-5">
+          <button type="button" class="btn btn-info col ml-5 mr-5" (click)="joinMeeting()">Join meeting</button>
+          <button type="button" class="btn btn-danger col ml-5 mr-5" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
 

@@ -1,0 +1,46 @@
+<app-menu [numberOfAppointments]="numberOfAppointments"></app-menu>
+<div class="card gradient-card">
+  <div class="card-image">
+    <a>
+      <div class="text-black d-flex h-100 mask blue-gradient-rgba">
+        <div class="first-content align-self-center p-3 row">
+        <h2 class="card-title col ml-2">{{patient.lastname+" "+patient.firstname}}</h2>
+        <div class="col mt-4">
+          <button class="btn btn-info"  data-toggle="modal" data-target="#myModal2" (click)="calculatePulse()">Calculate pulse</button>
+        </div>
+        </div>
+      </div>
+    </a>
+  </div>
+<ejs-chart id="chart-container" [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis'
+ [tooltip]='tooltip' selectionMode='Point' isMultiSelect='true'(pointClick)='dragComplete($event)'
+[selectedDataIndexes]='selectedData' [zoomSettings]='zoom'>
+    <e-series-collection>
+        <e-series [dataSource]='chartData' type='Line' xName='month' yName='sales'></e-series>
+    </e-series-collection>
+</ejs-chart>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="myModal2">
+  <div class="modal-dialog modal-sm-8 ">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <div  *ngIf="modalError" class="alert alert-danger"><strong>{{modalError}}</strong></div>
+      </div>
+
+
+      <!-- Modal body -->
+      <div class="modal-body">
+
+        <div class="row ml-5 mr-5">
+          <div *ngIf="!modalError"><strong>{{'The pulse value is around:'+val}}</strong></div>
+          <button type="button" class="btn btn-danger col ml-5 mr-5" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+

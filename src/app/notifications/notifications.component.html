@@ -43,23 +43,14 @@
 
         </div>
 
-        <!-- Data -->
         <div class="third-content ml-auto mr-4 mb-2">
-          <textarea class="md-textarea form-control" *ngIf="sendMessage"[(ngModel)]="message"></textarea>
-          <div *ngIf="sendMessage" class=" ml-2 mt-2 row">
-            <button class="ml-2 btn btn-success" (click)="send(p.id,message)">Send</button>
-            <button class="ml-2 btn btn-dark" (click)="cancel()">Cancel</button>
-          </div>
-          <button type="button" class="btn btn-primary" *ngIf="!sendMessage" (click)="openNewRequestDialog(appointment,p)">Set appointment</button>
+          <button type="button" class="btn btn-primary" (click)="openNewRequestDialog(appointment,p)">Set appointment</button>
         </div>
 
-        <!-- Content -->
         <div class="card-body">
           <h4 class="text-uppercase font-weight-bold my-4">Press for Patient's ECG</h4>
         </div>
-
     </div>
-
   </div>
 </div>
 

@@ -3,7 +3,6 @@ import { Appointment } from './../entitites/Appointment';
 import { DatePipe } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 @Component({
   selector: 'app-request-dialog',
   templateUrl: './request-dialog.component.html',
@@ -40,6 +39,7 @@ export class RequestDialogComponent implements OnInit {
 
   }
 
+
   public send(): void {
 
     const datePipe = new DatePipe("en-US");
@@ -56,7 +56,14 @@ export class RequestDialogComponent implements OnInit {
     this.dialogRef.close();
     this.type=null;
     this.link=null;
+    sessionStorage.removeItem('closed');
 
+  }
+
+  public close()
+  {
+    this.dialogRef.close();
+    sessionStorage.setItem('closed','false');
   }
 
   public enableBtn(): void {

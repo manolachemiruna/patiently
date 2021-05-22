@@ -37,7 +37,6 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ErrorMessageComponent } from './error-message/error-message.component';
-import {ChartModule} from 'primeng/chart';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { DoctorsComponent } from './admin/components/doctors/doctors.component';
@@ -48,6 +47,12 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {InputTextareaModule} from 'primeng/inputtextarea';
 import {DropdownModule} from 'primeng/dropdown';
+import { JoinMeetingComponent } from './join-meeting/join-meeting.component';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ChartModule } from '@syncfusion/ej2-angular-charts';
+import { CategoryService, LegendService, TooltipService } from '@syncfusion/ej2-angular-charts';
+import { DataLabelService, LineSeriesService,ZoomService,SelectionService} from '@syncfusion/ej2-angular-charts';
+import { GridModule } from '@syncfusion/ej2-angular-grids';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,6 +72,8 @@ import {DropdownModule} from 'primeng/dropdown';
     ErrorMessageComponent,
     TodayComponent,
     ThisMonthComponent,
+    JoinMeetingComponent,
+
 
   ],
   imports: [
@@ -92,15 +99,18 @@ import {DropdownModule} from 'primeng/dropdown';
     MatTabsModule,
     MatTableModule,
     HttpClientModule,
-    ChartModule,
     ToastModule,
     InputSwitchModule,
     NgApexchartsModule,
     ProgressSpinnerModule,
     InputTextareaModule,
     DropdownModule,
+    ConfirmDialogModule,
+    ChartModule,
+    GridModule
    ],
-  providers: [MatDatepickerModule, HttpClient,MessageService],
+  providers: [MatDatepickerModule, HttpClient,MessageService,CategoryService, LegendService,
+     TooltipService, DataLabelService, LineSeriesService,ZoomService,SelectionService ],
   bootstrap: [AppComponent],
   entryComponents: [
     RequestDialogComponent

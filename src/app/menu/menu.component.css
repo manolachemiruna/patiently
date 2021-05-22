@@ -28,3 +28,11 @@
       color: black;
       font-style: italic;
   }
+
+  mat-form-field {
+    margin-left: 2.5rem !important;
+    width: calc(100% - 2.5rem) !important;
+  }
+.modal{
+  padding-top: 200px;
+}

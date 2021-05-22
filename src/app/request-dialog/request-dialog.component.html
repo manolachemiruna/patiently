@@ -11,6 +11,7 @@
         <div>
             <button mat-button matStepperPrevious>Back</button>
             <button id="button" mat-button matStepperNext [disabled]="!date">Next</button>
+            <button mat-button (click)="close()" style="float:right">Cancel</button>
         </div>
   </mat-step>
 

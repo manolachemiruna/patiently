@@ -1,3 +1,4 @@
+import { JoinMeetingComponent } from './join-meeting/join-meeting.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { AuthGuardService } from './guards/auth-guard.service';
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: "", component: HomeComponent},
   {path: "home", component: HomeComponent},
   {path: "patients/:id", component: PatientsComponent, canActivate: [AuthGuardService]},
+  {path: "pulse/:id", component: JoinMeetingComponent, canActivate: [AuthGuardService]},
   {path: "patients", component: PatientsComponent, canActivate: [AuthGuardService]},
   {path: "appointments", component: RegisterComponent, canActivate: [AuthGuardService]},
   {path: "login", component: LoginComponent},

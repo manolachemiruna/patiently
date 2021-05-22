@@ -24,10 +24,14 @@ export class DoctorsComponent implements OnInit {
   foundDoctors: any;
   found: boolean;
   deSpecialitate: boolean;
+  emailMessage:string;
+  passwordMessage:string;
   constructor(private auth: AuthService, private userService: UserService) { }
 
   ngOnInit(): void {
 
+    this.emailMessage=null;
+    this.passwordMessage=null;
     sessionStorage.removeItem('message');
     this.message = null;
     this.found = false;
@@ -120,6 +124,26 @@ export class DoctorsComponent implements OnInit {
     const fullname = input.replace(/\s/g, '');
     const email = input.replace(/\s/g, '');
     if (regex1.test(email) || regex1.test(email)) {this.getDoctorByEmail(email); } else { this.getDoctorByName(fullname); }
+  }
+
+  public verifyEmail(email):void{
+
+    const regex1 = new RegExp('^.*@yahoo.com$');
+    const regex2 = new RegExp('^.*@gmail.com$');
+    if(!regex1.test(email) && !regex2.test(email))
+    {
+      console.log("aaaa");
+      this.emailMessage='Please type a valid email address!';
+    }
+    else{
+      this.emailMessage=null;
+    }
+  }
+
+  public verifyPassword(password):void{
+
+    if(password.length<6)this.passwordMessage='Your password should be at least 6 characters long!';
+    else this.passwordMessage=null;
   }
 
 }

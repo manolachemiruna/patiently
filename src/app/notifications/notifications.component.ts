@@ -31,8 +31,7 @@ export class NotificationsComponent implements OnInit,OnDestroy {
   searchedPatient: any;
   numberOfAppointments: number;
   uid: string;
-  onMessage:boolean;
-  onAppointment:boolean;
+  onAppointment:string;
   noPatient:boolean;
   subscription1 : Subscription;
   subscription2 : Subscription;
@@ -58,8 +57,8 @@ export class NotificationsComponent implements OnInit,OnDestroy {
     this.subscription3 = new Subscription();
     this.patients = [];
     this.patientsOnCurrentPage = [];
-    this.onAppointment=false;
-    this.onMessage=false;
+    this.onAppointment='false';
+    sessionStorage.setItem('closed','false');
     this.uid = sessionStorage.getItem('uid');
 
     this.subscription1=this.appointmentService.getAppointmentsByDoctor(this.uid).subscribe(appointments =>this.numberOfAppointments = appointments.length);
@@ -92,22 +91,14 @@ export class NotificationsComponent implements OnInit,OnDestroy {
     this.patientsOnCurrentPage = [];
   }
 
-  public onClickSendMessage(): void {
-    this.onMessage=true;
-    this.sendMessage = true;
-  }
-
-  public send(id:string, message:string) {
-    this.messageService.addMessage(id, message);
-    this.sendMessage = false;
-  }
-
   public isSelected(id: number): boolean {
     return id === this.selectedId;
   }
 
   openNewRequestDialog(appointment, patient): void {
-     this.onAppointment=true;
+
+     this.onAppointment='true';
+     sessionStorage.setItem('closed','true');
      const doctorId = this.uid;
      const patientId = patient.id;
      const patientName = patient.lastname + ' ' + patient.firstname;
@@ -119,6 +110,7 @@ export class NotificationsComponent implements OnInit,OnDestroy {
             patientName,
         }
     });
+    this.onAppointment=sessionStorage.getItem('closed');
 }
 
   nextPage() {
@@ -167,15 +159,14 @@ export class NotificationsComponent implements OnInit,OnDestroy {
 
   navigate(event, id) {
 
+    this.onAppointment=sessionStorage.getItem('closed');
+    if(this.onAppointment == 'false'){
     this.ngOnDestroy();
     this.router.navigate(['/patients', id]);
+    }
   }
 
-  cancel()
-  {
-    this.onMessage =false;
-    this.sendMessage=false;
-  }
+
 
 
   public getPatientByName(fullName:string): void {

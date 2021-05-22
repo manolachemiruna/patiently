@@ -1,0 +1,88 @@
+.card
+{
+border: none;
+border-radius: 2rem;
+border-color: lightseagreen;
+box-shadow: 0 0.5rem 1rem 0 rgba(29, 145, 160, 30);
+width: 80%;
+margin: 40px auto 0;
+align-self: center;
+}
+.jumbotron
+{
+  border: none;
+  border-radius: 2rem;
+  border-color: lightseagreen;
+  transition: all 0.2s;
+  box-shadow: 0 0.5rem 1rem 0 rgba(29, 145, 160, 30);
+  width: 60%;
+  align-self: center;
+  align-content: center;
+}
+
+textarea{
+
+  border-width:1px;
+  border-style:none;
+  border-radius: 1rem;
+  border-color: lightseagreen;
+  box-shadow: 0 0.5rem 1rem 0 rgba(29, 145, 160, 30);
+  width: 50%;
+  height: 50%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+h2
+{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+:host ::ng-deep .custom-spinner .p-progress-spinner-circle {
+  animation: custom-progress-spinner-dash 1.5s ease-in-out infinite, custom-progress-spinner-color 6s ease-in-out infinite;
+}
+
+@keyframes custom-progress-spinner-color {
+  100%,
+  0% {
+      stroke:rgba(25, 181, 254, 1);
+  }
+  40% {
+      stroke: rgba(25, 181, 254, 1);
+  }
+  66% {
+      stroke: rgba(54, 215, 183, 1);
+  }
+  80%,
+  90% {
+      stroke: rgba(3, 201, 169, 1);
+  }
+}
+
+@keyframes custom-progress-spinner-dash {
+  0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+  }
+  50% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -35px;
+  }
+  100% {
+      stroke-dasharray: 89, 200;
+      stroke-dashoffset: -124px;
+  }
+}
+
+.column{
+position: relative;
+right:49%;
+padding-right: 400px;
+}
+
+.label{
+font-style: italic;
+}

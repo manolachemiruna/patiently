@@ -17,9 +17,10 @@ import {
   ApexMarkers,
   ApexYAxis,
   ApexXAxis,
-  ApexTooltip
+  ApexTooltip,
+  ApexGrid,
+  ApexAnnotations
 } from "ng-apexcharts";
-/* tslint:disable */
 
 @Component({
   selector: 'app-patients',
@@ -42,6 +43,7 @@ export class PatientsComponent implements OnInit {
   appointment: Appointment;
   public progressSpinner:boolean;
   message:string;
+  xAxis:Array<number>;
 
   subscription1 : Subscription;
   subscription2 : Subscription;
@@ -57,6 +59,8 @@ export class PatientsComponent implements OnInit {
   public yaxis: ApexYAxis;
   public xaxis: ApexXAxis;
   public tooltip: ApexTooltip;
+  public grid:ApexGrid;
+  public annotations:ApexAnnotations;
 
 
 
@@ -69,6 +73,7 @@ export class PatientsComponent implements OnInit {
   ngOnInit(): void {
 
 
+    this.xAxis=[];
     this.initializeValues();
     this.subscription2 = new Subscription();
     let uid = sessionStorage.getItem('uid');
@@ -132,10 +137,10 @@ export class PatientsComponent implements OnInit {
 
           for( let i=0;i<data[data.length-1].data.length;i++)
           {
-            if(data[data.length-1].data[i] !=0)
+            if(data[data.length-1].data[i] !=null)
             {
               this.data1.push([ts2,data[data.length-1].data[i]]);
-              ts2 = ts2 + 0.007;
+              ts2 = ts2+0.007;
             }
 
           }
@@ -143,7 +148,7 @@ export class PatientsComponent implements OnInit {
           this.series = [
             {
               name: "Value",
-              data: this.data1
+              data: this.data1,
             }
           ];
 
@@ -191,6 +196,9 @@ export class PatientsComponent implements OnInit {
 
         this.progressSpinner=false;
 
+        let max=Math.max(...data[0].data);
+        console.log(max);
+
         this.ekgId=data[0].id;
         this.notes=data[0].notes;
         for( let i=0;i<data[0].data.length;i++)
@@ -198,10 +206,11 @@ export class PatientsComponent implements OnInit {
           if(data[0].data[i] !=0)
           {
             this.data1.push([ts2,data[0].data[i]]);
-            ts2 = ts2 + 0.007;
+            ts2 = ts2 + 0.07;
           }
         }
         console.log(ts2);
+
         this.series = [
           {
             name: "Value",
@@ -241,11 +250,10 @@ export class PatientsComponent implements OnInit {
 
   private setChart():void
   {
-
     this.chart = {
       type: "area",
       stacked: false,
-      height: 350,
+      height: 450,
       zoom: {
         type: "x",
         enabled: true,
@@ -253,15 +261,29 @@ export class PatientsComponent implements OnInit {
       },
       toolbar: {
         autoSelected: "zoom"
-      }
+      },
     };
 
+    this.grid={
+      show:true,
+      xaxis: {
+        lines: {
+            show: true
+        },
+
+    },
+    yaxis: {
+        lines: {
+            show: true
+        }
+    },
+    }
 
     this.dataLabels = {
       enabled: false
     };
     this.markers = {
-      size: 0
+      size: 0,
     };
     this.title = {
       text: "",
@@ -280,15 +302,32 @@ export class PatientsComponent implements OnInit {
     this.yaxis = {
       labels: {
         formatter: function(val) {
-          return (val).toFixed(0);
+          return (val).toFixed();
         }
       },
       title: {
-        text: ""
-      }
+        text: "Amplitude(milivolts)",
+        style: {
+          color: 'black',
+          fontSize: '14px',
+          fontFamily: 'Helvetica, Arial, sans-serif',
+          fontWeight: 600,
+          cssClass: 'apexcharts-yaxis-title',
+      },
+      },
     };
     this.xaxis = {
-      type: "numeric"
+    type: 'numeric',
+    title: {
+      text: "Time(seconds)",
+      style: {
+        color: 'black',
+        fontSize: '14px',
+        fontFamily: 'Helvetica, Arial, sans-serif',
+        fontWeight: 600,
+        cssClass: 'apexcharts-yaxis-title',
+    },
+    },
     };
     this.tooltip = {
       shared: false,
@@ -296,8 +335,17 @@ export class PatientsComponent implements OnInit {
         formatter: function(val) {
           return (val).toFixed(0);
         }
+      },
+      x: {
+        formatter: function(val) {
+          return (val).toFixed(2);
+        }
       }
     };
   }
 
+  public navigate()
+  {
+    this.router.navigate(['/pulse',this.id]);
+  }
 }
