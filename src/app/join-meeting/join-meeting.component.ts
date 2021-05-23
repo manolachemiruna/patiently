@@ -1,9 +1,9 @@
-import { AppointmentService } from './../services/appointment.service';
-import { UserService } from './../services/user.service';
-import { Component, OnInit } from '@angular/core';
+import { AppointmentService } from '../services/appointment.service';
+import { UserService } from '../services/user.service';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EkgService } from '../services/ekg.service';
-import { IPointEventArgs } from '@syncfusion/ej2-angular-charts';
+import { IPointEventArgs, IPointRenderEventArgs } from '@syncfusion/ej2-angular-charts';
 import { UserEmail } from '../entitites/UserEmail';
 
 @Component({
@@ -11,8 +11,9 @@ import { UserEmail } from '../entitites/UserEmail';
   templateUrl: './join-meeting.component.html',
   styleUrls: ['./join-meeting.component.css']
 })
-export class JoinMeetingComponent implements OnInit {
+export class JoinMeetingComponent implements OnInit,OnChanges{
 
+  @Input() selectedDate:string;
   chartData;
   primaryXAxis;
   primaryYAxis
@@ -30,16 +31,67 @@ export class JoinMeetingComponent implements OnInit {
   sall:number;
   patient:UserEmail;
   numberOfAppointments:number;
+  selected=[];
+
 
   public dragComplete(args: IPointEventArgs):void {
-  console.log(args);
-   this.arrayToCalculate.push(this.chartData[args.pointIndex]);
-   if(this.arrayToCalculate.length==2)this.val=parseFloat(this.arrayToCalculate[1].month)-parseFloat(this.arrayToCalculate[0].month);
+
+  this.selected.push(args.point.index);
+  this.marker={visible:true};
+  this.arrayToCalculate.push(this.chartData[args.pointIndex]);
+  if(this.arrayToCalculate.length==2)this.val=parseFloat(this.arrayToCalculate[1].x)-parseFloat(this.arrayToCalculate[0].x);
   }
+
+  public pointRender(args: IPointRenderEventArgs): void {
+
+    for(let i=0;i<this.selected.length;i++){
+    if(args.point.index === this.selected[i]) {
+            args.fill = 'black',
+            args.width = 30,
+            args.shape='Diamond'
+    }
+  }
+  };
 
   constructor(private ekg: EkgService,private route: ActivatedRoute, private userService:UserService,
     private appointmentService:AppointmentService) { }
 
+  ngOnChanges(changes: SimpleChanges): void{
+
+    this.getDataAboutPatient();
+
+    console.log(changes.selectedDate.currentValue);
+
+    if(changes.selectedDate.currentValue !== undefined)
+    {
+      this.ekg.getDataByPatientIdAndDate(this.id,changes.selectedDate.currentValue.date).subscribe(data =>{
+
+        let ts=0;
+        for(let i=0; i<data[data.length-1].data.length;i++)
+        {
+          this.data.push({x:ts.toFixed(2),y:data[data.length-1].data[i]});
+          ts+=0.025;
+          this.sall+=parseInt(data[data.length-1].data[i].length);
+        }
+        this.chartData = this.data
+        console.log(this.chartData);
+      });
+    }
+    else{
+      this.ekg.getDataByPatientId(this.id).subscribe(data =>{
+
+        let ts=0;
+        for(let i=0; i<data[data.length-1].data.length;i++)
+        {
+          this.data.push({x:ts.toFixed(2),y:data[data.length-1].data[i]});
+          ts+=0.025;
+          this.sall+=parseInt(data[data.length-1].data[i].length);
+        }
+        this.chartData = this.data
+        console.log(this.chartData);
+      });
+    }
+  }
   ngOnInit(): void {
 
     this.getDataAboutPatient();
@@ -67,20 +119,9 @@ export class JoinMeetingComponent implements OnInit {
 
       }
    });
-    this.ekg.getDataByPatientId(this.id).subscribe(data =>{
 
-      let ts=0;
-      for(let i=0; i<data[data.length-1].data.length;i++)
-      {
-        this.data.push({month:ts.toFixed(2),sales:data[data.length-1].data[i]});
-        ts+=0.025;
-        this.sall+=parseInt(data[data.length-1].data[i].length);
-      }
-      this.chartData = this.data
-      console.log(this.chartData);
-    });
 
-    this.marker = { visible: true };
+    this.marker = { visible: false};
     this.primaryXAxis = {
       title: 'Time(seconds)',
       valueType: 'Double',
@@ -92,10 +133,6 @@ export class JoinMeetingComponent implements OnInit {
    };
    this.selectionMode = 'Point';
 
-
-
-   this.chartData = this.selectedData;
-   console.log(this.selectedData);
   }
 
   public calculatePulse()
@@ -106,7 +143,7 @@ export class JoinMeetingComponent implements OnInit {
       this.val=0;
     }
     else{
-      this.val=(60/(parseFloat(this.arrayToCalculate[this.arrayToCalculate.length-1].month)-parseFloat(this.arrayToCalculate[this.arrayToCalculate.length-2].month))).toFixed(2);
+      this.val=(60/(parseFloat(this.arrayToCalculate[this.arrayToCalculate.length-1].x)-parseFloat(this.arrayToCalculate[this.arrayToCalculate.length-2].x))).toFixed(2);
       this.modalError=null;
       }
 
@@ -143,5 +180,8 @@ export class JoinMeetingComponent implements OnInit {
     this.patient.lastname='';
   }
   }
+
+
+
 
 }

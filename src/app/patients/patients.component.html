@@ -2,47 +2,12 @@
 
  <div [ngSwitch]="noData">
   <div *ngSwitchCase=false>
-  <div class="card gradient-card">
-    <div class="card-image">
-      <a>
-        <div class="text-black d-flex h-100 mask blue-gradient-rgba">
-          <div class="first-content align-self-center p-3 row">
-          <h2 class="card-title col ml-2">{{patient.lastname+" "+patient.firstname}}</h2>
-          <div class="col mt-4">
-            <button class="btn btn-info" (click)="navigate()">Selection mode</button>
-          </div>
-          </div>
-        </div>
-      </a>
-    </div>
+ <app-join-meeting [selectedDate]="selectedDate"></app-join-meeting>
 
-    <!-- Content -->
-    <div class="card-body">
-      <!-- <div class="column" style="text-align:center;font-style: italic;font-weight: bold; transform: rotate(-90deg);">Amplitude(milivolts)</div> -->
-        <div class="ml-5" id="chart">
-          <apx-chart
-            [series]="series"
-            [chart]="chart"
-            [dataLabels]="dataLabels"
-            [markers]="markers"
-            [title]="title"
-            [fill]="fill"
-            [yaxis]="yaxis"
-            [xaxis]="xaxis"
-            [tooltip]="tooltip"
-            [autoUpdateSeries]="true"
-            [grid]="grid"
-            [annotations]="annotations"
-          ></apx-chart>
-          <!--<div style="text-align: center; font-style: italic;font-weight: bold;">Time(seconds)</div> -->
-        </div>
-  </div>
-  </div>
   <div class="ml-5 row" >
     <div class="col mt-5" style="text-align: center">
       <p-dropdown [style]="{'border':'dotted','padding':'10px','width':'60%','font-size':'20px','text-align':'center',
       'border-color': 'lightseagreen', 'border-radius': '2rem',  'box-shadow': '0 0.5rem 1rem 0 rgba(29, 145, 160, 190)'}"
-
       [panelStyle]="{'padding':'10px','width':'60%','font-size':'20px','text-align':'center','background-color':'white'}"
       class="ml-5" [options]="dates" [(ngModel)]="selectedDate" optionLabel="date" placeholder="Select a date"
        [showTransitionOptions]="'0ms'" [hideTransitionOptions]="'0ms'" (onChange)="getEkgByDate()"></p-dropdown>
@@ -82,5 +47,6 @@
       </div>
 
     </div>
+  </div>
   </div>
 
